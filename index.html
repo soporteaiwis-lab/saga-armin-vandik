@@ -25,6 +25,7 @@
   --dockh:0px;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+[hidden]{display:none!important}
 html{scroll-behavior:smooth;scroll-padding-top:68px;-webkit-text-size-adjust:100%}
 body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.6;
   padding-bottom:calc(var(--dockh) + env(safe-area-inset-bottom) + 24px);overflow-x:hidden}
@@ -182,6 +183,61 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;bac
   .reveal{opacity:1;transform:none}
 }
 @media (min-width:700px){ body{font-size:18px} .wrap{max-width:600px} }
+
+/* ---------- acceso, opinión y panel ---------- */
+#gate,#adm{position:fixed;inset:0;z-index:100;background:var(--bg);display:none;overflow-y:auto;padding:max(24px,env(safe-area-inset-top)) 20px calc(28px + env(safe-area-inset-bottom))}
+#gate.show,#adm.show{display:block}
+#gate .box{max-width:420px;margin:0 auto;min-height:calc(100dvh - 60px);display:flex;flex-direction:column;justify-content:center}
+#gate h2{font-size:clamp(38px,11vw,52px);font-style:italic;margin:10px 0 12px}
+#gate .lead{color:var(--ink2)}
+.field{display:block;margin-top:16px}
+.field>span{display:block;font-size:14px;color:var(--ink2);margin-bottom:6px}
+.field input,.field textarea{width:100%;font:inherit;font-size:16px;color:var(--ink);background:#15110d;border:1px solid rgba(246,239,228,.28);border-radius:14px;padding:13px 14px;min-height:50px}
+.field textarea{min-height:130px;resize:vertical;line-height:1.5}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.err{color:#ffb4b4;font-size:14px;min-height:22px;margin-top:10px}
+.fine{font-size:13px;color:var(--ink2);margin-top:14px;line-height:1.5}
+.lnk{text-decoration:underline;color:var(--ink2);min-height:44px;padding:0 6px;font-size:14px}
+#fb{position:fixed;inset:0;z-index:90;display:none}
+#fb.show{display:block}
+#fb .bd{position:absolute;inset:0;background:rgba(0,0,0,.7)}
+#fb .sh{position:absolute;left:0;right:0;bottom:0;max-width:600px;margin:0 auto;max-height:94dvh;overflow-y:auto;background:#14100c;border:1px solid var(--line);border-bottom:0;border-radius:26px 26px 0 0;padding:20px 20px calc(26px + env(safe-area-inset-bottom));animation:up .35s ease both}
+@keyframes up{from{transform:translateY(36px);opacity:0}to{transform:none;opacity:1}}
+#fb .hd{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+#fb h3{font-size:25px;font-style:italic;line-height:1.15}
+#fb .tg{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+#fb .x{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;flex:none;margin:-6px -8px 0 0;color:var(--ink2)}
+fieldset.q{border:0;margin-top:22px;min-width:0}
+fieldset.q legend{font-weight:600;font-size:16px;margin-bottom:6px;padding:0}
+.opt{display:flex;align-items:center;gap:12px;min-height:48px;padding:6px 14px;border-radius:14px;border:1px solid var(--line);margin-top:8px;cursor:pointer;font-size:16px;line-height:1.35}
+.opt input{width:22px;height:22px;accent-color:var(--accent);flex:none}
+.opt:has(input:checked){border-color:var(--accent);background:rgba(255,255,255,.06)}
+.qother{margin-top:8px}
+.qother input{width:100%;font:inherit;font-size:16px;color:var(--ink);background:#15110d;border:1px solid var(--line);border-radius:14px;padding:11px 14px;min-height:46px}
+.qh{font-family:var(--serif);font-style:italic;font-size:21px;margin-top:26px}
+.qs{font-size:14px;color:var(--ink2)}
+.gatebox{margin:-10px 0 26px;font-size:15px;color:var(--ink2)}
+.gatebox b{color:var(--ink)}
+.gatebox .cta{margin-top:10px}
+.play[aria-disabled=true]{background:transparent;color:var(--ink2);border:1px dashed rgba(246,239,228,.35)}
+#demoBar{position:fixed;left:0;right:0;top:0;z-index:120;background:#7a1f1f;color:#fff;font-size:13px;text-align:center;padding:4px 8px}
+#adm .wrap{max-width:640px}
+#adm h2{font-size:30px;font-style:italic;margin:6px 0 4px}
+.ahd{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:6px}
+.asum{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:18px 0}
+.ac{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px;text-align:center}
+.ac b{display:block;font-family:var(--serif);font-size:30px;line-height:1.1}
+.ac span{font-size:13px;color:var(--ink2)}
+.person{border:1px solid var(--line);border-radius:16px;margin-top:10px;background:rgba(255,255,255,.03)}
+.person summary{list-style:none;cursor:pointer;min-height:60px;padding:8px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.person summary::-webkit-details-marker{display:none}
+.person summary strong{display:block;font-weight:600}
+.person summary small{display:block;color:var(--ink2);font-size:13px;word-break:break-all}
+.person summary em{font-style:normal;font-size:13px;color:var(--accent);white-space:nowrap}
+.pb{padding:4px 16px 18px}
+.pb h4{font-family:var(--serif);font-style:italic;font-size:19px;margin-top:16px}
+.pb p{white-space:pre-wrap;margin-top:4px;color:#eadfcf}
+.pb ul{margin:8px 0 0 18px;font-size:14px;color:var(--ink2)}
 </style>
 </head>
 <body>
@@ -200,6 +256,7 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;bac
     <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3l2.7 5.8 6.3.8-4.6 4.4 1.2 6.3L12 17.2 6.4 20.3l1.2-6.3L3 9.6l6.3-.8z"/></symbol>
     <symbol id="i-door" viewBox="0 0 24 24"><path d="M6 21V4a1 1 0 0 1 1-1h8l3 2v16M3 21h18M13 12h.01"/></symbol>
     <symbol id="i-sprout" viewBox="0 0 24 24"><path d="M12 21v-9M12 12c0-4-3-6-8-6 0 4 2 6 8 6zM12 14c0-3 2.5-5 7-5 0 3.500-2 5-7 5z"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
     <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3M12 15v2"/></symbol>
   </defs>
 </svg>
@@ -233,6 +290,8 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;bac
 
     <button class="cta" id="startAll"><svg class="i f"><use href="#i-play"/></svg>Escuchar la saga en orden</button>
     <p class="hint">O baja y vive la historia capítulo por capítulo.</p>
+    <p class="hint" id="hello" hidden><span id="helloName"></span> · <button type="button" class="lnk" id="logout">No soy yo</button></p>
+    <button class="cta sec" id="admBtn" hidden style="margin-top:6px">Abrir panel privado</button>
 
     <nav class="order" aria-label="Orden recomendado">
       <a href="#c1" style="--c:#f2b45a"><b>1</b><div><strong>Lo que nunca dije</strong><span>El antes · lo que se calló</span></div></a>
@@ -479,6 +538,44 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;bac
 </main>
 
 <!-- ================= REPRODUCTOR ================= -->
+<div id="demoBar" hidden>Modo de prueba: las respuestas no se están guardando en ningún servidor.</div>
+
+<div id="gate" class="show" role="dialog" aria-modal="true" aria-labelledby="gt">
+  <div class="box">
+    <p class="kicker">Armin Vandik · AiwisMusic</p>
+    <h2 id="gt">La saga</h2>
+    <p class="lead">Tres canciones, una misma historia, y un bonus track. Antes de empezar, dime cómo te llamas.</p>
+    <form id="gForm" novalidate>
+      <label class="field"><span>Tu nombre</span><input id="gName" autocomplete="name" maxlength="60" required></label>
+      <label class="field"><span>Tu correo</span><input id="gMail" type="email" inputmode="email" autocomplete="email" autocapitalize="off" maxlength="120" required></label>
+      <input class="hp" id="gHp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <label class="field" id="gKeyRow" hidden><span>Clave privada</span><input id="gKey" type="password" autocomplete="off" maxlength="80"></label>
+      <p class="err" id="gErr" role="alert"></p>
+      <button class="cta" id="gBtn" type="submit" style="width:100%;margin-top:4px">Entrar</button>
+    </form>
+    <p class="fine">Guardamos tu nombre, tu correo y lo que respondas solo para que Armin pueda leerlo. No se publica ni se comparte. No es un registro: no hay contraseña.</p>
+  </div>
+</div>
+
+<div id="fb" role="dialog" aria-modal="true" aria-labelledby="fbT">
+  <div class="bd"></div>
+  <div class="sh">
+    <div class="hd">
+      <div><p class="tg" id="fbTag"></p><h3 id="fbT" tabindex="-1"></h3></div>
+      <button class="x" id="fbX" aria-label="Cerrar. Tu texto queda guardado en el teléfono"><svg class="i"><use href="#i-x"/></svg></button>
+    </div>
+    <div id="fbBody"></div>
+  </div>
+</div>
+
+<div id="adm" role="dialog" aria-modal="true" aria-labelledby="admT">
+  <div class="wrap">
+    <div class="ahd"><h2 id="admT">Panel privado</h2><button class="cta sec" id="admX" style="margin:0">Cerrar</button></div>
+    <p class="qs">Solo tú ves esto. Está en la memoria de esta sesión y desaparece al cerrar.</p>
+    <div id="admBody"></div>
+  </div>
+</div>
+
 <div id="dock" role="region" aria-label="Reproductor de la saga">
   <div id="stage"><div id="yt"></div></div>
   <div id="meta"><b id="mt">—</b><small id="ms"></small></div>
@@ -601,6 +698,7 @@ let pending=null,pendingT=0;
 function fmt(s){s=Math.max(0,Math.floor(s||0));return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')}
 function play(i,start=0){
   i=(i+SONGS.length)%SONGS.length;
+  if(!canPlay(i)){blocked(i);return}
   if(!ytReady){
     if(!yt&&!window.YT){window.open('https://www.youtube.com/watch?v='+SONGS[i].yt,'_blank','noopener');return}
     pending=i;pendingT=start;toast('Cargando el reproductor…',2000);return;
@@ -615,7 +713,10 @@ function play(i,start=0){
 }
 function mark(){
   $$('.play').forEach(b=>{
-    const on=+b.dataset.song===cur; b.querySelector('span').textContent=on?'Sonando':'Escuchar'; b.setAttribute('aria-pressed',on);
+    const i=+b.dataset.song, on=i===cur, lk=!canPlay(i), ic=b.querySelector('svg');
+    b.querySelector('span').textContent=lk?'Bloqueada':(on?'Sonando':'Escuchar');
+    b.setAttribute('aria-pressed',on); b.setAttribute('aria-disabled',lk);
+    ic.classList.toggle('f',!lk); ic.querySelector('use').setAttribute('href',lk?'#i-lock':'#i-play');
   });
 }
 function onState(e){
@@ -625,7 +726,9 @@ function onState(e){
   if(playing){clearInterval(tick);tick=setInterval(prog,500);$('#tdur').textContent=fmt(yt.getDuration());startLoop()}
   else {clearInterval(tick);lyricUpdate()}
   if(e.data===S.ENDED){
-    if(cur<SONGS.length-1){ if(story){ goChapter(cur+1);} play(cur+1) }
+    ended[cur]=true; saveState();
+    if(!done[cur]&&!isAdmin){ openFeedback(cur) }
+    else if(cur<SONGS.length-1){ if(story){ goChapter(cur+1);} play(cur+1) }
     else { document.getElementById('fin').scrollIntoView({behavior:'smooth'}); }
   }
 }
@@ -638,7 +741,7 @@ let seeking=false; const sk=$('#seek');
 sk.addEventListener('input',()=>{seeking=true;$('#tcur').textContent=fmt(sk.value/1000*(yt.getDuration()||0))});
 sk.addEventListener('change',()=>{ yt.seekTo(sk.value/1000*(yt.getDuration()||0),true); seeking=false; lyricUpdate() });
 $('#pp').onclick=()=>{ if(!ytReady)return; if(cur<0){play(0);return} const st=yt.getPlayerState(); st===1?yt.pauseVideo():yt.playVideo() };
-$('#nxt').onclick=()=>{ if(cur<0)play(0); else {if(story)goChapter(cur+1);play(cur+1)} };
+$('#nxt').onclick=()=>{ if(cur<0)play(0); else {if(story&&canPlay(cur+1))goChapter(cur+1);play(cur+1)} };
 $('#prev').onclick=()=>{ if(cur>0&&yt.getCurrentTime()<4){if(story)goChapter(cur-1);play(cur-1)} else if(cur>=0){yt.seekTo(0,true)} else play(0) };
 $('#expand').onclick=()=>{const b=dock.classList.toggle('big');$('#expand').setAttribute('aria-expanded',b);$('#expand').setAttribute('aria-label',b?'Reducir el video':'Ampliar el video');setTimeout(setDock,60)};
 $$('.play').forEach(b=>b.addEventListener('click',()=>{ const i=+b.dataset.song; if(i===cur&&ytReady){yt.getPlayerState()===1?yt.pauseVideo():yt.playVideo()} else play(i) }));
@@ -751,6 +854,225 @@ $$('.reveal').forEach(el=>io2.observe(el));
     if(kk!==last){last=kk;txt.innerHTML='<span>'+['En la mañana la sombra es larga: todo lo que uno arrastra.','Mediodía. Mi sombra cabe en mis pies.','Y la tarde la quiero también.'][kk]+'</span>'}
   }
   r.addEventListener('input',draw);draw();
+})();
+
+/* =====================================================================
+   ACCESO · OPINIONES · QUIZ · PANEL PRIVADO
+   ===================================================================== */
+const API_URL='https://script.google.com/macros/s/AKfycbyTyiOr--uXtPinkhb0QdHpeRtMCJVbsD7_9Y8V9QKhMxW91VWC-dFJv8D0ts7d7Yu5/exec';      // vacío = modo de prueba (no guarda en ningún servidor)
+const REQUIRE_QUIZ=false;         // true = obligar a marcar las 3 alternativas
+const QUIZ=[
+  [{q:'¿Qué sentiste al escucharla?',o:['Nostalgia','Culpa o reconocimiento','Alivio']},
+   {q:'¿Con qué frase te quedas?',o:['«Te dejé en la puerta, ni adentro ni afuera»','«No eras tú la que sobraba… lo que faltaba estaba en mí»','«Lo más cruel que te hice fue estar presente… y no estar»']},
+   {q:'¿Qué te dan ganas de hacer?',o:['Decir algo que callé','Escribirle a alguien','Quedarme un rato en silencio']}],
+  [{q:'¿Qué sentiste al escucharla?',o:['Calma','Esperanza','Ganas de hablar']},
+   {q:'¿Qué parte del trato te hizo más sentido?',o:['Hablar cuando son brotes','Pedir pausa y guardarme la última palabra','Volver a la mesa antes de que se apague el día']},
+   {q:'¿Cuál es hoy tu «maleza»?',o:['Algo que dejé pasar','Una discusión que se repite','Nada, mi patio está al día']}],
+  [{q:'¿Qué sentiste al escucharla?',o:['Dolor','Esperanza','Gratitud']},
+   {q:'¿Qué te pareció su mensaje: «el amor no se marchó, lo que muere es la guerra»?',o:['Me pasó, lo conozco','Es bonito, pero difícil','No siempre se puede reparar']},
+   {q:'¿A quién le dirías «todavía estamos a tiempo»?',o:['A mi pareja o a alguien que fue mi pareja','A alguien de mi familia o a un amigo','A mí mismo o a mí misma']}],
+  [{q:'¿Qué sentiste al escucharla?',o:['Libertad','Serenidad','Ganas de cambiar algo']},
+   {q:'Después de las tres anteriores, ¿qué fue para ti?',o:['Un cierre, un descanso','Un nuevo comienzo','Otra canción, otra cosa']},
+   {q:'¿Realidad o ficción?',o:['Realidad','Ficción','Un poco de ambas']}]
+];
+const LS={get(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
+let user=LS.get('saga_user'), done=[false,false,false,false], ended=[false,false,false,false], isAdmin=false, adminKey='', adminData=null;
+const MAIN=['header.top','main','#dock'];
+function inertOn(on){MAIN.forEach(s=>{const e=$(s); if(e)e.inert=on})}
+function emailKey(){return user?user.email.toLowerCase():''}
+function saveState(){ if(!user||isAdmin)return; LS.set('saga_done_'+emailKey(),done); LS.set('saga_ended_'+emailKey(),ended) }
+function loadState(){ const d=LS.get('saga_done_'+emailKey()), e=LS.get('saga_ended_'+emailKey()); if(Array.isArray(d))done=done.map((x,i)=>!!d[i]); if(Array.isArray(e))ended=ended.map((x,i)=>!!e[i]) }
+
+/* ---- comunicación con el Apps Script ---- */
+async function api(body){
+  if(!API_URL){ // modo de prueba
+    if(body.action==='login') return {ok:true,admin:false,done:done.map((d,i)=>d?i:-1).filter(i=>i>=0)};
+    if(body.action==='feedback') return {ok:true};
+    return {ok:false,error:'demo'};
+  }
+  const c=new AbortController(), t=setTimeout(()=>c.abort(),20000);
+  try{
+    const r=await fetch(API_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(body),signal:c.signal});
+    return await r.json();
+  } finally { clearTimeout(t) }
+}
+function outbox(){return LS.get('saga_outbox')||[]}
+function queue(item){const o=outbox();o.push(item);LS.set('saga_outbox',o.slice(-60))}
+async function flushOutbox(){
+  const o=outbox(); if(!o.length||!API_URL)return; const rest=[];
+  for(const it of o){ try{const r=await api(it); if(!r.ok&&!['opinion','datos','cancion','correo','nombre'].includes(r.error))rest.push(it)}catch(e){rest.push(it)} }
+  LS.set('saga_outbox',rest);
+}
+addEventListener('online',flushOutbox);
+
+/* ---- pantalla de acceso ---- */
+const gate=$('#gate'), gErr=$('#gErr'), gBtn=$('#gBtn'), gKeyRow=$('#gKeyRow');
+let step='login';
+function showGate(){gate.classList.add('show');inertOn(true);document.body.style.overflow='hidden'}
+function hideGate(){gate.classList.remove('show');inertOn(false);document.body.style.overflow=''}
+function gateError(t){gErr.textContent=t}
+function busy(on,label){gBtn.disabled=on;gBtn.textContent=on?'Un momento…':label}
+const validEmail=e=>/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e);
+$('#gForm').addEventListener('submit',async ev=>{
+  ev.preventDefault(); gateError('');
+  const name=$('#gName').value.trim().replace(/\s+/g,' '), email=$('#gMail').value.trim().toLowerCase();
+  if(name.length<2){gateError('Escribe tu nombre.');$('#gName').focus();return}
+  if(!validEmail(email)){gateError('Revisa tu correo: parece que le falta algo.');$('#gMail').focus();return}
+  if(step==='key'){ return adminLogin(name,email,$('#gKey').value) }
+  busy(true,'Entrar');
+  try{
+    const r=await api({action:'login',name,email,device:navigator.userAgent.slice(0,120),web:$('#gHp').value});
+    if(!r.ok){gateError(r.error==='correo'?'Ese correo no parece válido.':'No pudimos entrar. Intenta de nuevo.');busy(false,'Entrar');return}
+    if(r.admin){ step='key'; gKeyRow.hidden=false; busy(false,'Ver panel'); $('#gKey').focus(); gateError(''); return }
+    user={name,email}; LS.set('saga_user',user); loadState(); (r.done||[]).forEach(i=>{done[i]=true}); saveState(); enter();
+  }catch(e){
+    // sin conexión: entra igual y avisa al servidor cuando vuelva
+    user={name,email}; LS.set('saga_user',user); loadState(); queue({action:'login',name,email,device:navigator.userAgent.slice(0,120)}); enter();
+  }
+  busy(false,'Entrar');
+});
+async function adminLogin(name,email,key){
+  if(!key){gateError('Escribe tu clave privada.');return}
+  busy(true,'Ver panel');
+  try{
+    const r=await api({action:'admin',name,email,key});
+    if(r.ok){ isAdmin=true; adminKey=key; adminData=r; user={name,email}; done=[true,true,true,true]; enter(); openAdmin(); }
+    else gateError(r.error==='bloqueado'?'Demasiados intentos. Espera 15 minutos.':r.error==='demo'?'El panel necesita el servidor conectado.':'Clave incorrecta.');
+  }catch(e){gateError('No pude conectar con el servidor.')}
+  busy(false,'Ver panel');
+}
+function enter(){
+  hideGate(); $('#gKey').value=''; gKeyRow.hidden=true; step='login';
+  $('#hello').hidden=false; $('#helloName').textContent=isAdmin?'Sesión de administrador':'Hola, '+user.name.split(' ')[0];
+  $('#admBtn').hidden=!isAdmin; refreshLocks(); mark(); flushOutbox();
+}
+$('#logout').onclick=()=>{
+  LS.del('saga_user'); user=null; isAdmin=false; adminKey=''; adminData=null; done=[false,false,false,false]; ended=[false,false,false,false];
+  if(yt&&ytReady){try{yt.stopVideo()}catch(e){}} cur=-1; dock.classList.remove('show'); setDock();
+  $('#hello').hidden=true; $('#admBtn').hidden=true; refreshLocks(); mark(); window.scrollTo(0,0); showGate(); $('#gName').value='';$('#gMail').value='';
+};
+
+/* ---- bloqueo entre canciones ---- */
+function canPlay(i){ if(isAdmin||i===0)return true; for(let j=0;j<i;j++)if(!done[j])return false; return true }
+function firstPending(i){for(let j=0;j<i;j++)if(!done[j])return j; return -1}
+function blocked(i){
+  const n=firstPending(i); if(n<0)return;
+  if(ended[n]){ openFeedback(n) }
+  else toast(`Primero escucha «${SONGS[n].title}» hasta el final y cuéntanos qué te pareció. <a href="#" data-playsong="${n}">Escucharla ahora</a>`,7000);
+}
+document.addEventListener('click',e=>{
+  const a=e.target.closest('[data-playsong]'); if(a){e.preventDefault();$('#toast').classList.remove('on');const n=+a.dataset.playsong;goChapter(n);play(n)}
+  const o=e.target.closest('[data-openfb]'); if(o){e.preventDefault();openFeedback(+o.dataset.openfb)}
+});
+function refreshLocks(){
+  $$('.ch').forEach((ch,i)=>{
+    let box=ch.querySelector('.gatebox'); if(!box){box=document.createElement('div');box.className='gatebox';ch.querySelector('.acts').insertAdjacentElement('afterend',box)}
+    box.textContent='';
+    const add=(html)=>{box.insertAdjacentHTML('beforeend',html)};
+    if(isAdmin){return}
+    if(done[i]) add('<span>✓ Tu opinión de esta canción quedó guardada.</span>');
+    else if(!canPlay(i)){ const n=firstPending(i);
+      add(`<b>Bloqueada.</b> Antes cuéntanos qué te dejó «${esc(SONGS[n].title)}».`);
+      add(ended[n]?`<br><button class="cta sec" data-openfb="${n}">Dejar mi opinión</button>`:`<br><button class="cta sec" data-playsong="${n}">Escuchar «${esc(SONGS[n].title)}»</button>`);
+    } else if(ended[i]) add(`<button class="cta sec" data-openfb="${i}">Dejar mi opinión de esta canción</button>`);
+  });
+  mark();
+}
+
+/* ---- hoja de opinión + quiz ---- */
+const fb=$('#fb'), fbBody=$('#fbBody'); let fbSong=-1;
+function sheetOpen(on){fb.classList.toggle('show',on);inertOn(on);document.body.style.overflow=on?'hidden':''}
+function openFeedback(i){
+  fbSong=i; const s=SONGS[i], q=QUIZ[i]; fb.style.setProperty('--accent',s.accent);
+  $('#fbTag').textContent=(i===3?'Bonus track':'Canción '+(i+1)+' de 3'); $('#fbT').textContent='¿Qué te dejó «'+s.title+'»?';
+  const draft=LS.get('saga_draft_'+emailKey()+'_'+i)||{op:'',pick:[],other:['','','']};
+  let h='<form id="fbForm" novalidate>';
+  h+='<label class="field"><span>Tu opinión, crítica u observación <b>(obligatorio)</b></span><textarea id="fbOp" maxlength="2000" aria-describedby="fbHelp" placeholder="Lo que sentiste, lo que te vino a la mente…"></textarea></label>';
+  h+='<p class="qs" id="fbHelp">Si no sentiste nada, escribe «no sentí nada». Eso también sirve.</p>';
+  h+='<p class="qh">Mini quiz'+(REQUIRE_QUIZ?'':' <span class="qs">(opcional)</span>')+'</p>';
+  q.forEach((it,k)=>{
+    h+=`<fieldset class="q"><legend>${k+1}. ${esc(it.q)}</legend>`;
+    it.o.forEach((o,j)=>{h+=`<label class="opt"><input type="radio" name="q${k}" value="${j}"><span>${esc(o)}</span></label>`});
+    h+=`<div class="qother"><input type="text" id="qo${k}" maxlength="300" aria-label="Otra respuesta para la pregunta ${k+1} (opcional)" placeholder="Otra respuesta (opcional)"></div></fieldset>`;
+  });
+  h+='<p class="err" id="fbErr" role="alert"></p><button class="cta" id="fbSend" type="submit" style="width:100%;margin-top:4px" disabled>Guardar y seguir</button></form>';
+  fbBody.innerHTML=h; $('#fbOp').value=draft.op;
+  q.forEach((it,k)=>{ if(draft.pick[k]!=null){const r=fbBody.querySelector(`input[name=q${k}][value="${draft.pick[k]}"]`); if(r)r.checked=true} $('#qo'+k).value=draft.other[k]||'' });
+  const upd=()=>{ $('#fbSend').disabled=$('#fbOp').value.trim().length<3; LS.set('saga_draft_'+emailKey()+'_'+i,{op:$('#fbOp').value,pick:q.map((_,k)=>{const r=fbBody.querySelector(`input[name=q${k}]:checked`);return r?+r.value:null}),other:q.map((_,k)=>$('#qo'+k).value)}) };
+  fbBody.addEventListener('input',upd); upd();
+  $('#fbForm').addEventListener('submit',ev=>{ev.preventDefault();sendFeedback(i)});
+  sheetOpen(true); setTimeout(()=>$('#fbT').focus(),60);
+}
+async function sendFeedback(i){
+  const q=QUIZ[i], op=$('#fbOp').value.trim(), err=$('#fbErr'); err.textContent='';
+  if(op.length<3){err.textContent='Escribe algo, aunque sea «no sentí nada».';$('#fbOp').focus();return}
+  const quiz=q.map((it,k)=>{const r=fbBody.querySelector(`input[name=q${k}]:checked`);return{pick:r?it.o[+r.value]:'',other:$('#qo'+k).value.trim()}});
+  if(REQUIRE_QUIZ&&quiz.some(x=>!x.pick&&!x.other)){err.textContent='Marca una alternativa en cada pregunta.';return}
+  const payload={action:'feedback',name:user.name,email:user.email,song:i,opinion:op,quiz};
+  const btn=$('#fbSend'); btn.disabled=true; btn.textContent='Guardando…'; let offline=false;
+  try{ const r=await api(payload); if(!r.ok){ btn.disabled=false;btn.textContent='Guardar y seguir';err.textContent=r.error==='opinion'?'Escribe algo, aunque sea «no sentí nada».':'No se pudo guardar. Intenta de nuevo.';return} }
+  catch(e){ offline=true; queue(payload) }
+  done[i]=true; saveState(); LS.del('saga_draft_'+emailKey()+'_'+i); refreshLocks();
+  const last=i===SONGS.length-1;
+  fbBody.innerHTML=`<div style="text-align:center;padding:26px 0 6px"><p class="qh" style="margin-top:0">${last?'Gracias por escuchar la saga.':'Gracias. Queda guardado.'}</p>`+
+    (offline?'<p class="qs" style="margin-top:8px">Sin conexión: tu opinión quedó en el teléfono y se enviará sola.</p>':'')+
+    `<p class="lead" style="margin:10px auto 0;color:var(--ink2)">${last?'Armin va a leer lo que escribiste.':'Ya puedes escuchar «'+esc(SONGS[i+1].title)+'».'}</p>`+
+    (last?'<button class="cta" id="fbEnd" style="margin-top:18px">Compartir la saga</button>':'<button class="cta" id="fbNext" style="margin-top:18px"><svg class="i f"><use href="#i-play"/></svg>Escuchar la siguiente</button>')+
+    '<br><button class="lnk" id="fbLater" style="margin-top:6px">Más tarde</button></div>';
+  $('#fbT').textContent=last?'Fin de la saga':'Siguiente canción'; $('#fbTag').textContent='';
+  const nx=$('#fbNext'); if(nx)nx.onclick=()=>{sheetOpen(false);goChapter(i+1);play(i+1)};
+  const en=$('#fbEnd'); if(en)en.onclick=()=>{sheetOpen(false);share('Tres canciones, una misma historia. ¿A quién le dirías «todavía estamos a tiempo»?');document.getElementById('fin').scrollIntoView({behavior:'smooth'})};
+  $('#fbLater').onclick=()=>{sheetOpen(false); if(last)document.getElementById('fin').scrollIntoView({behavior:'smooth'})};
+}
+$('#fbX').onclick=()=>sheetOpen(false);
+$('#fb .bd').onclick=()=>sheetOpen(false);
+addEventListener('keydown',e=>{if(e.key==='Escape'){if(fb.classList.contains('show'))sheetOpen(false); else if($('#adm').classList.contains('show'))closeAdmin()}});
+
+/* ---- panel privado (solo con usuario, correo y clave correctos) ---- */
+const adm=$('#adm');
+function closeAdmin(){adm.classList.remove('show');inertOn(false);document.body.style.overflow=''}
+async function openAdmin(refresh){
+  adm.classList.add('show'); inertOn(true); document.body.style.overflow='hidden';
+  if(refresh||!adminData){ try{ const r=await api({action:'admin',name:user.name,email:user.email,key:adminKey}); if(r.ok)adminData=r; else {$('#admBody').textContent='No se pudo actualizar.';return} }catch(e){$('#admBody').textContent='Sin conexión.';return} }
+  renderAdmin(adminData);
+}
+$('#admBtn').onclick=()=>openAdmin(true); $('#admX').onclick=closeAdmin;
+function renderAdmin(d){
+  const root=$('#admBody'); root.textContent='';
+  const el=(tag,cls,txt)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(txt!=null)n.textContent=txt;return n};
+  const sum=el('div','asum');
+  [[d.people.length,'personas'],[d.answers.length,'respuestas'],[d.people.filter(p=>p.done.length>=4).length,'terminaron']].forEach(([n,l])=>{const c=el('div','ac');c.append(el('b',null,String(n)),el('span',null,l));sum.append(c)});
+  root.append(sum);
+  const row=el('div','acts'); row.style.margin='0 0 8px';
+  if(/^https:\/\/docs\.google\.com\//.test(d.sheetUrl||'')){const a=el('a','cta','Abrir la hoja (BD)');a.href=d.sheetUrl;a.target='_blank';a.rel='noopener';a.style.margin='0';row.append(a)}
+  const rf=el('button','cta sec','Actualizar'); rf.style.margin='0'; rf.onclick=()=>openAdmin(true); row.append(rf); root.append(row);
+  if(!d.people.length){root.append(el('p','qs','Todavía no entra nadie.'));return}
+  d.people.forEach(p=>{
+    const det=el('details','person'), sm=el('summary'), l=el('div'), st=el('strong',null,p.name), sg=el('small',null,p.email);
+    l.append(st,sg); sm.append(l,el('em',null,p.done.length+'/4 · '+String(p.last||'').slice(0,16)));
+    det.append(sm); const body=el('div','pb');
+    const mine=d.answers.filter(a=>String(a.email).toLowerCase()===String(p.email).toLowerCase()).sort((a,b)=>a.n-b.n);
+    if(!mine.length)body.append(el('p','qs','Sin respuestas todavía. Visitas: '+p.visits));
+    mine.forEach(a=>{
+      body.append(el('h4',null,a.n+'. '+a.song)); body.append(el('p',null,a.opinion));
+      const ul=el('ul'); (QUIZ[a.n-1]||[]).forEach((it,k)=>{const x=a.quiz[k]||{}; const t=[x.pick,x.other?('Otra: '+x.other):''].filter(Boolean).join(' · ')||'—'; ul.append(el('li',null,it.q+' → '+t))});
+      body.append(ul);
+    });
+    det.append(body); root.append(det);
+  });
+}
+
+/* ---- arranque ---- */
+if(!API_URL)$('#demoBar').hidden=false;
+(async function boot(){
+  inertOn(true);
+  if(!user){showGate();return}
+  loadState(); hideGate(); enter();
+  try{
+    const r=await api({action:'login',name:user.name,email:user.email,device:navigator.userAgent.slice(0,120)});
+    if(r.ok&&r.admin){ user=null; showGate(); $('#gName').value=''; $('#gMail').value=''; return }   // el admin vuelve a identificarse con su clave
+    if(r.ok){(r.done||[]).forEach(i=>{done[i]=true});saveState();refreshLocks()}
+  }catch(e){}
 })();
 </script>
 </body>
