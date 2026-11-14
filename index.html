@@ -219,7 +219,8 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;bac
 #fb h3{font-size:25px;font-style:italic;line-height:1.15}
 #fb .tg{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
 #fb .x{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;flex:none;margin:-6px -8px 0 0;color:var(--ink2)}
-fieldset.q{border:0;margin-top:22px;min-width:0}
+fieldset.q{border:0;margin-top:22px;min-width:0;display:block;flex:none;min-height:0;background:none;padding:0;border-radius:0;scroll-snap-align:none}
+.ovl [tabindex="-1"]:focus-visible,#fb [tabindex="-1"]:focus-visible{outline:none}
 fieldset.q legend{font-weight:600;font-size:16px;margin-bottom:6px;padding:0}
 .opt{display:flex;align-items:center;gap:12px;min-height:48px;padding:6px 14px;border-radius:14px;border:1px solid var(--line);margin-top:8px;cursor:pointer;font-size:16px;line-height:1.35}
 .opt input{width:22px;height:22px;accent-color:var(--accent);flex:none}
@@ -250,6 +251,89 @@ fieldset.q legend{font-weight:600;font-size:16px;margin-bottom:6px;padding:0}
 .pb h4{font-family:var(--serif);font-style:italic;font-size:19px;margin-top:16px}
 .pb p{white-space:pre-wrap;margin-top:4px;color:#eadfcf}
 .pb ul{margin:8px 0 0 18px;font-size:14px;color:var(--ink2)}
+
+/* ---------- escena de letra (protagonista) + hilo ---------- */
+#scene{position:fixed;left:0;right:0;top:0;bottom:var(--dockh);z-index:35;display:none;flex-direction:column;
+  background:radial-gradient(90% 55% at 50% 0%,color-mix(in srgb,var(--accent) 22%,transparent),transparent 70%),var(--bg);
+  padding-top:env(safe-area-inset-top)}
+#scene.show{display:flex}
+.sc-hd{display:flex;align-items:center;gap:10px;padding:10px 14px 4px;flex:none}
+.sc-hd button{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--line);color:var(--ink2);flex:none}
+.sc-hd div{min-width:0}
+.sc-tag{font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--accent)}
+.sc-title{font-family:var(--serif);font-style:italic;font-size:22px;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sc-ly{position:relative;flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;scroll-behavior:smooth;padding:18dvh 22px 22dvh;
+  -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 16%,#000 80%,transparent 100%);mask-image:linear-gradient(to bottom,transparent 0,#000 16%,#000 80%,transparent 100%)}
+.sc-ly::-webkit-scrollbar{display:none}
+.sc-ly .lsec{text-align:center}
+.sl{display:block;width:100%;text-align:center;min-height:44px;padding:8px 0;font-family:var(--serif);font-style:italic;font-size:clamp(22px,6.6vw,32px);line-height:1.28;color:var(--ink);opacity:.34;transition:opacity .4s}
+.sl .w{opacity:.6;transition:color .2s,opacity .2s}
+.sl.on{opacity:1}
+.sl.on .w.d{color:var(--accent);opacity:1}
+.sc-empty{text-align:center;color:var(--ink2);padding:30px 0}
+.hilo{flex:none;margin:0 14px 12px;padding:14px 16px 12px;border-radius:20px;background:rgba(20,16,12,.92);border:1px solid var(--line);min-height:128px;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer;text-align:left;width:calc(100% - 28px)}
+.hilo .ht{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent)}
+.hilo p{font-family:var(--serif);font-size:18px;line-height:1.4;margin-top:6px;color:#efe5d6;max-width:none;animation:fade .6s both}
+.hilo .hd2{display:flex;gap:6px;margin-top:10px}
+.hilo .hd2 i{width:6px;height:6px;border-radius:50%;background:rgba(246,239,228,.25)}
+.hilo .hd2 i.on{background:var(--accent)}
+#meta[role=button]{cursor:pointer}
+#meta b::after{content:" ♪";color:var(--accent);font-style:normal}
+
+/* ---------- cuestionarios (letras A B C D) ---------- */
+.opt .ltr{width:28px;height:28px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;font-size:13px;font-weight:700;flex:none;color:var(--ink2)}
+.opt:has(input:checked) .ltr{background:var(--accent);color:#140d07;border-color:var(--accent)}
+.opt input{position:absolute;opacity:0;width:1px;height:1px}
+.opt{position:relative}
+.opt:has(input:focus-visible){outline:3px solid var(--accent);outline-offset:2px}
+.need{font-size:13px;color:var(--ink2);margin-top:8px;min-height:20px}
+.need.ok{color:#9fe3a5}
+
+/* ---------- pantallas completas: cierre, última pregunta, resultado, destinatario ---------- */
+.ovl{position:fixed;inset:0;z-index:100;background:var(--bg);display:none;overflow-y:auto;padding:max(24px,env(safe-area-inset-top)) 20px calc(32px + env(safe-area-inset-bottom))}
+.ovl.show{display:block}
+.ovl .box{max-width:460px;margin:0 auto}
+.ovl h2{font-size:clamp(30px,9vw,42px);font-style:italic;margin:8px 0 10px}
+.ovl .lead{color:var(--ink2)}
+#last{z-index:110;background:radial-gradient(80% 50% at 50% 0%,rgba(142,31,58,.38),transparent 70%),#070504}
+#last .box{min-height:calc(100dvh - 64px);display:flex;flex-direction:column;justify-content:center}
+#last .big{font-family:var(--serif);font-style:italic;font-size:clamp(25px,7.2vw,34px);line-height:1.3;margin-top:18px}
+#last .big em{color:var(--gold)}
+#last .seal{margin-top:22px;padding:14px 16px;border-radius:16px;border:1px solid rgba(227,189,124,.4);background:rgba(227,189,124,.06);font-size:16px;line-height:1.5}
+#last .cta{width:100%;margin-top:14px;min-height:60px;font-size:18px}
+#last .cta.no{background:transparent;color:var(--ink);border:1px solid rgba(246,239,228,.4)}
+#last .care{margin-top:22px;font-size:13px;color:var(--ink2);line-height:1.5}
+.stars{display:flex;gap:4px;margin-top:6px}
+.stars button{width:48px;height:48px;border-radius:12px;display:grid;place-items:center;color:rgba(246,239,228,.35)}
+.stars button svg{width:32px;height:32px;fill:none;stroke:currentColor}
+.stars button.on{color:#f6c453}
+.stars button.on svg{fill:currentColor}
+.chk{display:flex;align-items:flex-start;gap:12px;margin-top:18px;font-size:15px;line-height:1.45;color:var(--ink2)}
+.chk input{width:24px;height:24px;accent-color:var(--accent);flex:none;margin-top:1px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.chip{font-size:13px;padding:5px 12px;border-radius:20px;border:1px solid var(--line);color:var(--ink2)}
+.chip.on{border-color:#9fe3a5;color:#9fe3a5}
+.panelx{margin-top:22px;padding:16px;border-radius:18px;background:var(--card);border:1px solid var(--line)}
+.panelx h3{font-size:20px;font-style:italic}
+.care{font-size:13px;color:var(--ink2);margin-top:18px;line-height:1.5}
+.big2{font-family:var(--serif);font-style:italic;font-size:24px;line-height:1.35;margin-top:16px}
+.big2 em{color:var(--gold)}
+.recvmsg{margin-top:16px;padding:16px;border-left:3px solid var(--accent);font-family:var(--serif);font-style:italic;font-size:21px;line-height:1.4;white-space:pre-wrap}
+
+/* ---------- reseñas ---------- */
+.revs{padding:64px 0 30px;border-top:1px solid var(--line);text-align:center}
+.revs h2{font-size:clamp(28px,8vw,36px);font-style:italic;margin-bottom:6px}
+.avg{display:flex;align-items:center;justify-content:center;gap:10px;margin:12px 0 6px;color:#f6c453}
+.avg b{font-family:var(--serif);font-size:40px;color:var(--ink);line-height:1}
+.sv{display:inline-flex;gap:2px;vertical-align:middle}
+.sv svg{width:18px;height:18px;fill:currentColor;stroke:none}
+.sv svg.o{fill:none;stroke:currentColor;stroke-width:1.6}
+.rcards{display:grid;gap:12px;margin-top:20px;text-align:left}
+.rc{padding:16px;border-radius:18px;background:var(--card);border:1px solid var(--line)}
+.rc .rh{display:flex;align-items:center;justify-content:space-between;gap:10px;color:#f6c453}
+.rc .rh strong{color:var(--ink);font-weight:600}
+.rc p{margin-top:8px;font-family:var(--serif);font-style:italic;font-size:18px;line-height:1.4;color:#efe5d6}
+.rc small{display:block;margin-top:8px;color:var(--ink2);font-size:13px;line-height:1.4}
 </style>
 </head>
 <body>
@@ -533,11 +617,22 @@ fieldset.q legend{font-weight:600;font-size:16px;margin-bottom:6px;padding:0}
 </section>
 
 <!-- ================= CIERRE ================= -->
+<!-- ================= RESEÑAS ================= -->
+<section class="revs" id="resenas">
+  <div class="wrap">
+    <p class="kicker">Lo que dicen quienes la escucharon</p>
+    <h2 class="reveal">Reseñas de la saga</h2>
+    <div id="revBody"><p class="qs" style="margin:0 auto">Cuando alguien termine la saga y quiera compartir su experiencia, aparecerá aquí.</p></div>
+  </div>
+</section>
+
+<!-- ================= CIERRE ================= -->
 <section class="end" id="fin">
   <div class="wrap">
     <h2 class="reveal">¿A quién le dirías<br>«todavía estamos a tiempo»?</h2>
     <p class="reveal">Guarda la saga y compártela con esa persona. A veces una canción abre la conversación que costaba empezar.</p>
     <div class="acts reveal">
+      <button class="cta" id="closeBtn" hidden style="margin-top:0">Tu cierre de la saga</button>
       <button class="cta" id="shareSaga" style="margin-top:0"><svg class="i"><use href="#i-share"/></svg>Compartir la saga</button>
       <button class="cta sec" id="again"><svg class="i"><use href="#i-up"/></svg>Volver al inicio</button>
     </div>
@@ -597,9 +692,44 @@ fieldset.q legend{font-weight:600;font-size:16px;margin-bottom:6px;padding:0}
   </div>
 </div>
 
+<div id="scene" role="region" aria-label="Letra de la canción">
+  <div class="sc-hd">
+    <button id="scBack" aria-label="Ver el texto del capítulo"><svg class="i"><use href="#i-chev"/></svg></button>
+    <div><p class="sc-tag" id="scTag"></p><p class="sc-title" id="scTitle"></p></div>
+  </div>
+  <div class="sc-ly" id="scLy" tabindex="0" aria-label="Letra sincronizada. Toca una línea para escucharla desde ahí."></div>
+  <button class="hilo" id="hilo" aria-label="Mensaje del hilo de la saga. Toca para ver el siguiente.">
+    <div><div class="ht" id="hiloT"></div><p id="hiloP"></p></div>
+    <div class="hd2" id="hiloD" aria-hidden="true"></div>
+  </button>
+</div>
+
+<div id="finale" class="ovl" role="dialog" aria-modal="true" aria-labelledby="finT">
+  <div class="box">
+    <p class="kicker">Armin Vandik · AiwisMusic</p>
+    <h2 id="finT" tabindex="-1">Cierre de la saga</h2>
+    <p class="lead">Escuchaste las cuatro. Antes de la última pregunta, cuatro preguntas cortas sobre toda la historia. Todas cuentan.</p>
+    <form id="finForm" novalidate><div id="finQs"></div>
+      <div class="field"><span>¿Qué nota le pones a la saga?</span>
+        <div class="stars" id="finStars" role="radiogroup" aria-label="Nota de 1 a 5 estrellas"></div></div>
+      <label class="field"><span>Cuéntalo libre <b>(opcional)</b></span>
+        <textarea id="finText" maxlength="3000" aria-describedby="finHelp" placeholder="Lo que te provocó toda la saga…"></textarea></label>
+      <p class="qs" id="finHelp">Qué te transmitió, qué te recordó, qué te hizo sentir. Si fueras parte de la canción, o si fuera tu historia: ¿quién serías y qué cambiarías?</p>
+      <label class="chk"><input type="checkbox" id="finPub"><span>Quiero que mi reseña aparezca en la página con mi nombre y apellido abreviado (ej.: «Ana P.»). Armin la revisa antes de publicarla.</span></label>
+      <p class="err" id="finErr" role="alert"></p>
+      <p class="need" id="finNeed"></p>
+      <button class="cta" id="finSend" type="submit" style="width:100%" disabled>Guardar y ir a la última pregunta</button>
+    </form>
+  </div>
+</div>
+
+<div id="last" class="ovl" role="dialog" aria-modal="true" aria-labelledby="lastT"><div class="box" id="lastBox"></div></div>
+<div id="result" class="ovl" role="dialog" aria-modal="true" aria-labelledby="resT"><div class="box" id="resBox"></div></div>
+<div id="recv" class="ovl" role="dialog" aria-modal="true" aria-labelledby="recvT"><div class="box" id="recvBox"></div></div>
+
 <div id="dock" role="region" aria-label="Reproductor de la saga">
   <div id="stage"><div id="yt"></div></div>
-  <div id="meta"><b id="mt">—</b><small id="ms"></small></div>
+  <div id="meta" role="button" tabindex="0" aria-label="Abrir la letra de la canción"><b id="mt">—</b><small id="ms"></small></div>
   <div id="ctrl">
     <button id="prev" aria-label="Canción anterior"><svg class="i f"><use href="#i-prev"/></svg></button>
     <button id="pp" aria-label="Reproducir"><svg class="i f" id="ppi"><use href="#i-play"/></svg></button>
@@ -635,13 +765,43 @@ const QUOTES={
   3:['No dejamos de sentir, dejamos de saber cuidarnos.','Todavía nos amamos, el amor no se marchó.','No te pido volver atrás, te propongo algo nuevo.','Amar no es aceptarlo todo.','Esto no lo arregla uno solo, se construye entre los dos.','Todavía estamos a tiempo.'],
   4:['Mi sombra cabe en mis pies.','Ya no me quiero esconder.','El sol me encuentra de frente y me deja brillar otra vez.','Y la tarde la quiero también.']
 };
+/* El «hilo»: mensajes que rotan bajo la letra. Solo salen de las letras y de docs/SAGA.md. */
+const fr=n=>QUOTES[n].map(t=>['Frase','«'+t+'»']);
+const THREAD=[
+  [['Contexto','Primera pieza de la saga: el antes. Lo que se calló, hasta que por fin se dice.'],
+   ['El hilo','Una sola historia contada en cuatro momentos. Lo que escuchas ahora es lo que trajo a los dos hasta aquí.'],
+   ...fr(1),
+   ['Puente · con la siguiente','«Te dejé en la puerta» → «nada entra a esta casa si no lo dejamos pasar». En Brotes, la puerta se abre.'],
+   ['Puente · con la siguiente','«Guardaste mis silencios» → «me guardo la última palabra». Lo que antes se callaba, ahora se cuida.'],
+   ['Para pensar','¿Qué dejaste tú en la puerta? ¿Qué cosa no dijiste a tiempo?'],
+   ['Lo que viene','En la segunda canción, Brotes, esto se vuelve un trato: hablar cuando los problemas recién asoman.']],
+  [['Contexto','Segunda pieza: el trato. Después de decirlo todo, llega el acuerdo: conversar cuando son brotes.'],
+   ['Puente · con la anterior','«Estuve en la mesa… y aun así tan lejos» → «volvemos a la mesa». Lo que dolía en la primera, acá es una promesa.'],
+   ['El hilo','Lo que en la primera canción fue reconocimiento, aquí es compromiso: pedir pausa sin portazos y no ensuciar el nombre del otro.'],
+   ...fr(2),
+   ['Para pensar','¿Qué conversación pendiente todavía es un brote en tu patio?'],
+   ['Lo que viene','En la tercera, Todavía nos amamos: ¿y si la maleza ya creció? Aun así, el amor sigue ahí.']],
+  [['Contexto','Tercera pieza: lo que queda. Aunque la maleza haya crecido, el amor sigue ahí.'],
+   ['Puente · con la anterior','El trato de Brotes («hablemos cuando son brotes») es lo que esta canción pone a prueba cuando ya es tarde.'],
+   ['El hilo','No dejaron de sentir: dejaron de saber cuidarse. Y eso se aprende.'],
+   ...fr(3),
+   ['Con honestidad','No todo amor debe seguir si solo deja dolor. Pero si hay amor, respeto y voluntad, yo creo en reparar.'],
+   ['Para pensar','¿Qué tendría que morir en tu historia para que el amor respire: la guerra, los reproches, el silencio?'],
+   ['Lo que viene','Sigue el bonus, Mediodía: el autor mira toda la saga. Y al terminar, una última pregunta.']],
+  [['Contexto','Bonus track: la mirada del autor sobre las tres canciones. Una reflexión personal.'],
+   ['Puente · con las tres','«Lo que faltaba estaba en mí» (1) · «hablemos cuando son brotes» (2) · «todavía estamos a tiempo» (3). Mediodía las mira de frente.'],
+   ['El hilo','Un hombre camina todo el día y, a mediodía, el sol le da de frente. Deja de esconderse, y entonces puede verse.'],
+   ...fr(4),
+   ['Para pensar','¿Realidad o ficción? Solo eso lo sabe el autor. ¿Y en tu historia?'],
+   ['Lo que viene','Al terminar vendrán unas preguntas finales y una última que merece que la respondas con calma.']]
+];
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const esc=s=>s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
 
 /* ---------- letras y frases ---------- */
 /* letra sincronizada: [{sec,s,e,w:[[palabra,ini,fin],...]}] */
 const LN=[]; // por canción: [{el,words:[{el,s}],s,e,text}]
-let userAt=0, act=-1, base={t:0,at:0,last:-1}, raf=0, playing=false;
+let userAt=0, act=-1, actS=-1, userAtS=0, base={t:0,at:0,last:-1}, raf=0, playing=false;
 $$('.ly').forEach(sec=>{
   const i=+sec.dataset.ly, panel=sec.querySelector('.lyp'); let html='',prev='';
   (LYRICS[i]||[]).forEach((l,k)=>{
@@ -680,7 +840,70 @@ function lyricUpdate(){
     } else $('#ms').textContent=SONGS[cur].sub;
   }
   if(act>=0)L[act].words.forEach(w=>w.el.classList.toggle('d',w.s<=t));
+  sceneUpdate(t);
 }
+/* escena: la misma letra, en grande y al centro */
+const SCN=[]; let sceneOn=false, sceneSong=-1;
+function buildScene(i){
+  if(SCN[i])return SCN[i];
+  const panel=$('#scLy'); let html='',prev='';
+  (LYRICS[i]||[]).forEach((l,k)=>{
+    if(l.sec!==prev){html+=`<div class="lsec">${esc(l.sec)}</div>`;prev=l.sec}
+    html+=`<button class="sl" data-k="${k}" aria-label="Escuchar desde: ${esc(l.w.map(w=>w[0]).join(' '))}">`+l.w.map(w=>`<span class="w">${esc(w[0])}</span>`).join(' ')+'</button>';
+  });
+  if(!html)html='<p class="sc-empty">Esta canción todavía no tiene la letra sincronizada.</p>';
+  const tmp=document.createElement('div'); tmp.innerHTML=html;
+  SCN[i]=[...tmp.querySelectorAll('.sl')].map((el,k)=>{const l=LYRICS[i][k];return{el,s:l.s,e:l.e,words:[...el.querySelectorAll('.w')].map((w,j)=>({el:w,s:l.w[j][1]}))}});
+  SCN[i].html=html; return SCN[i];
+}
+function sceneUpdate(t){
+  if(!sceneOn||cur<0||cur!==sceneSong)return;
+  const L=SCN[cur]; if(!L||!L.length)return; let k=-1;
+  for(let j=0;j<L.length;j++){ if(L[j].s<=t)k=j; else break }
+  if(k>=0&&t>L[k].e+3.5)k=-2;
+  if(k!==actS){
+    if(actS>=0&&L[actS]){L[actS].el.classList.remove('on');L[actS].words.forEach(w=>w.el.classList.remove('d'))}
+    actS=k;
+    if(k>=0){
+      L[k].el.classList.add('on');
+      const p=$('#scLy');
+      if(performance.now()-userAtS>2500){
+        const rm=matchMedia('(prefers-reduced-motion:reduce)').matches;
+        p.scrollTo({top:L[k].el.offsetTop-p.clientHeight/2+L[k].el.offsetHeight/2,behavior:rm?'auto':'smooth'});
+      }
+    }
+  }
+  if(actS>=0)L[actS].words.forEach(w=>w.el.classList.toggle('d',w.s<=t));
+}
+['pointerdown','wheel','touchstart'].forEach(ev=>$('#scLy').addEventListener(ev,()=>{userAtS=performance.now()},{passive:true}));
+$('#scLy').addEventListener('click',e=>{
+  const b=e.target.closest('.sl'); if(!b||cur<0)return; const t=Math.max(0,LYRICS[cur][+b.dataset.k].s-0.3);
+  if(ytReady){yt.seekTo(t,true);yt.playVideo()}
+});
+/* hilo: mensajes que rotan bajo la letra */
+let hiloT=null, hiloI=0, hiloSong=-1;
+function hiloShow(){
+  const arr=THREAD[hiloSong]||[]; if(!arr.length)return; const it=arr[hiloI%arr.length];
+  $('#hiloT').textContent=it[0]; const p=$('#hiloP'); p.textContent=it[1]; p.style.animation='none'; void p.offsetWidth; p.style.animation='';
+  $('#hiloD').innerHTML=arr.map((_,k)=>'<i'+(k===hiloI%arr.length?' class="on"':'')+'></i>').join('');
+}
+function hiloNext(){hiloI++;hiloShow()}
+function hiloStart(i){ hiloSong=i; hiloI=0; clearInterval(hiloT); hiloShow(); hiloT=setInterval(()=>{if(!document.hidden)hiloNext()},9000) }
+$('#hilo').onclick=()=>{hiloNext();clearInterval(hiloT);hiloT=setInterval(()=>{if(!document.hidden)hiloNext()},9000)};
+function openScene(i){
+  const s=SONGS[i]; sceneSong=i; sceneOn=true; actS=-1; userAtS=0;
+  $('#scTag').textContent=s.sub; $('#scTitle').textContent=s.title;
+  document.documentElement.style.setProperty('--accent',s.accent);
+  buildScene(i); $('#scLy').innerHTML=SCN[i].html;
+  // el HTML se vuelve a crear: reenganchar los nodos
+  const nodes=[...$('#scLy').querySelectorAll('.sl')]; SCN[i].forEach((l,k)=>{l.el=nodes[k];l.words=[...nodes[k].querySelectorAll('.w')].map((w,j)=>({el:w,s:LYRICS[i][k].w[j][1]}))});
+  $('#scLy').scrollTop=0; $('#scene').classList.add('show'); document.body.style.overflow='hidden'; hiloStart(i); setDock();
+}
+function closeScene(){ if(!sceneOn)return; sceneOn=false; $('#scene').classList.remove('show'); clearInterval(hiloT); if(!document.querySelector('.ovl.show,#gate.show,#fb.show,#adm.show'))document.body.style.overflow='' }
+$('#scBack').onclick=()=>{ closeScene(); if(cur>=0)goChapter(cur) };
+const openSceneFromDock=()=>{ if(cur>=0)openScene(cur) };
+$('#meta').addEventListener('click',()=>{ sceneOn?closeScene():openSceneFromDock() });
+$('#meta').addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){e.preventDefault();sceneOn?closeScene():openSceneFromDock()} });
 function loop(){lyricUpdate();raf=playing?requestAnimationFrame(loop):0}
 function startLoop(){if(!raf)raf=requestAnimationFrame(loop)}
 $$('.quotes').forEach(c=>{
@@ -737,6 +960,7 @@ function play(i,start=0){
   act=-1; $$('.ln.on').forEach(e=>e.classList.remove('on')); $$('.ln .w.d').forEach(e=>e.classList.remove('d'));
   yt.loadVideoById({videoId:s.yt,startSeconds:start});
   mark(); media(s);
+  openScene(i);                       // la letra pasa a primer plano apenas empieza la canción
 }
 function mark(){
   $$('.play').forEach(b=>{
@@ -753,14 +977,20 @@ function onState(e){
   if(playing){applyVol();clearInterval(tick);tick=setInterval(prog,500);$('#tdur').textContent=fmt(yt.getDuration());startLoop()}
   else {clearInterval(tick);lyricUpdate()}
   if(e.data===S.ENDED){
-    ended[cur]=true; saveState();
-    if(!done[cur]&&!isAdmin){ openFeedback(cur) }
+    covMark(cur,(yt.getDuration()||0)-0.6); covSave();
+    if(!done[cur]&&!isAdmin){
+      const p=covPct(cur);
+      if(p>=LISTEN_MIN*100){ ended[cur]=true; saveState(); openFeedback(cur) }
+      else toast(`Escuchaste el ${p} % de «${esc(SONGS[cur].title)}». Para seguir tiene que sonar casi completa (mínimo ${Math.round(LISTEN_MIN*100)} %). <a href="#" data-playsong="${cur}">Escucharla de nuevo</a>`,9000);
+    }
     else if(cur<SONGS.length-1){ if(story){ goChapter(cur+1);} play(cur+1) }
-    else { document.getElementById('fin').scrollIntoView({behavior:'smooth'}); }
+    else if(!isAdmin&&st.fin!==true&&done.every(Boolean)){ openFinale() }
+    else { closeScene(); document.getElementById('fin').scrollIntoView({behavior:'smooth'}); }
   }
 }
 function prog(){
   if(!yt||!yt.getDuration)return; const d=yt.getDuration()||1,c=yt.getCurrentTime()||0;
+  if(playing&&!seeking&&cur>=0){ DUR[cur]=d; covMark(cur,c); if((++covTick)%20===0)covSave() }
   if(!seeking){$('#seek').value=Math.round(c/d*1000)} $('#tcur').textContent=fmt(c); $('#tdur').textContent=fmt(d);
   $('#seek').style.setProperty('--p',c/d);
 }
@@ -887,7 +1117,15 @@ $$('.reveal').forEach(el=>io2.observe(el));
    ACCESO · OPINIONES · QUIZ · PANEL PRIVADO
    ===================================================================== */
 const API_URL='https://script.google.com/macros/s/AKfycbyTyiOr--uXtPinkhb0QdHpeRtMCJVbsD7_9Y8V9QKhMxW91VWC-dFJv8D0ts7d7Yu5/exec';      // vacío = modo de prueba (no guarda en ningún servidor)
-const REQUIRE_QUIZ=false;         // true = obligar a marcar las 3 alternativas
+const REQUIRE_QUIZ=true;          // true = las 3 preguntas de cada canción son obligatorias (A, B, C o D con texto)
+const REQUIRE_OPINION=false;      // true = el comentario de cada canción también es obligatorio
+const LISTEN_MIN=0.7;             // fracción de la canción que tiene que sonar de verdad para poder responder
+const FINAL_QUIZ=[
+  {q:'¿Qué sentiste al terminar la saga?',o:['Ganas de reparar algo','Una nostalgia tranquila','Esperanza']},
+  {q:'¿Con quién te identificaste?',o:['Con quien calló (la puerta)','Con quien propone el trato (los brotes)','Con quien sigue amando (la llave)']},
+  {q:'¿Qué cambiarías primero?',o:['Hablar a tiempo, cuando son brotes','Escuchar sin defenderme','Pedir perdón sin sentir que pierdo']},
+  {q:'¿Qué te recordó la saga?',o:['Una relación de pareja (actual o pasada)','Mi familia','A mí mismo o a mí misma']}
+];
 const QUIZ=[
   [{q:'¿Qué sentiste al escucharla?',o:['Nostalgia','Culpa o reconocimiento','Alivio']},
    {q:'¿Con qué frase te quedas?',o:['«Te dejé en la puerta, ni adentro ni afuera»','«No eras tú la que sobraba… lo que faltaba estaba en mí»','«Lo más cruel que te hice fue estar presente… y no estar»']},
@@ -904,6 +1142,18 @@ const QUIZ=[
 ];
 const LS={get(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
 let user=LS.get('saga_user'), done=[false,false,false,false], ended=[false,false,false,false], isAdmin=false, adminKey='', adminData=null;
+/* estado que viene del servidor: cierre hecho, decisión sellada, entrega */
+let st={fin:false,dec:'',rtok:'',sent:false,read:false,hasMsg:false};
+function applyState(r){ (r.done||[]).forEach(i=>{done[i]=true}); st={fin:!!r.fin,dec:r.dec||'',rtok:r.rtok||'',sent:!!r.sent,read:!!r.read,hasMsg:!!r.hasMsg} }
+/* cuánto de cada canción sonó de verdad (segundos distintos escuchados; repetir un trozo no suma) */
+const COV=[[],[],[],[]], DUR=LS.get('saga_dur')||[0,0,0,0]; let covTick=0;
+function covMark(i,sec){ if(i<0)return; const k=Math.floor(sec); if(k>=0&&k<2400)COV[i][k]=1 }
+function covPct(i){ const d=Math.floor(DUR[i]||0); if(!d)return 0; let n=0; for(let k=0;k<d;k++)if(COV[i][k])n++; return Math.min(100,Math.round(n/d*100)) }
+function covSave(){ if(!user||isAdmin)return; LS.set('saga_dur',DUR); LS.set('saga_cov_'+emailKey(),COV.map((a,i)=>{let s='';const d=Math.floor(DUR[i]||0);for(let k=0;k<d;k++)s+=a[k]?'1':'0';return s})) }
+function covLoad(){ const c=LS.get('saga_cov_'+emailKey()); for(let i=0;i<4;i++){COV[i]=[]; if(c&&typeof c[i]==='string')for(let k=0;k<c[i].length;k++)if(c[i][k]==='1')COV[i][k]=1} }
+/* pantallas completas */
+function ovlOpen(id){ $('#'+id).classList.add('show'); inertOn(true); document.body.style.overflow='hidden'; const h=$('#'+id+' [tabindex="-1"]'); if(h)setTimeout(()=>h.focus(),60); $('#'+id).scrollTop=0 }
+function ovlClose(id){ $('#'+id).classList.remove('show'); inertOn(false); document.body.style.overflow='' }
 /* ---- volumen (iPhone/iPad no deja cambiar el volumen por código: allí solo silenciar; el volumen va con los botones del teléfono) ---- */
 const IOS=/iP(hone|ad|od)/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
 let vol=(()=>{const v=LS.get('saga_vol');return typeof v==='number'&&v>=0&&v<=100?v:80})(), muted=!!LS.get('saga_muted');
@@ -931,7 +1181,7 @@ const MAIN=['header.top','main','#dock'];
 function inertOn(on){MAIN.forEach(s=>{const e=$(s); if(e)e.inert=on})}
 function emailKey(){return user?user.email.toLowerCase():''}
 function saveState(){ if(!user||isAdmin)return; LS.set('saga_done_'+emailKey(),done); LS.set('saga_ended_'+emailKey(),ended) }
-function loadState(){ const d=LS.get('saga_done_'+emailKey()), e=LS.get('saga_ended_'+emailKey()); if(Array.isArray(d))done=done.map((x,i)=>!!d[i]); if(Array.isArray(e))ended=ended.map((x,i)=>!!e[i]) }
+function loadState(){ const d=LS.get('saga_done_'+emailKey()), e=LS.get('saga_ended_'+emailKey()); if(Array.isArray(d))done=done.map((x,i)=>!!d[i]); if(Array.isArray(e))ended=ended.map((x,i)=>!!e[i]); covLoad() }
 
 /* ---- comunicación con el Apps Script ---- */
 async function api(body){
@@ -951,7 +1201,7 @@ function outbox(){return LS.get('saga_outbox')||[]}
 function queue(item){const o=outbox();o.push(item);LS.set('saga_outbox',o.slice(-60))}
 async function flushOutbox(){
   const o=outbox(); if(!o.length||!API_URL)return; const rest=[];
-  for(const it of o){ try{const r=await api(it); if(!r.ok&&!['opinion','datos','cancion','correo','nombre'].includes(r.error))rest.push(it)}catch(e){rest.push(it)} }
+  for(const it of o){ try{const r=await api(it); if(!r.ok&&!['opinion','datos','cancion','correo','nombre','orden','escucha','quiz'].includes(r.error))rest.push(it)}catch(e){rest.push(it)} }
   LS.set('saga_outbox',rest);
 }
 addEventListener('online',flushOutbox);
@@ -978,7 +1228,7 @@ $('#gForm').addEventListener('submit',async ev=>{
     const r=await api({action:'login',name,email,pass,device:navigator.userAgent.slice(0,120),web:$('#gHp').value});
     if(!r.ok){gateError(GATE_MSG[r.error]||'No pudimos entrar. Intenta de nuevo.');busy(false,'Entrar');return}
     if(r.admin){ return adminLogin(name,email,pass) }   // tu usuario: la misma clave es la privada del panel
-    user={name,email,tok:r.tok||''}; LS.set('saga_user',user); loadState(); (r.done||[]).forEach(i=>{done[i]=true}); saveState(); enter();
+    user={name,email,tok:r.tok||''}; LS.set('saga_user',user); loadState(); applyState(r); saveState(); enter(); route();
     if(r.nuevo)toast('Listo: tu clave quedó guardada. Úsala para volver a entrar.',6000);
   }catch(e){
     gateError('No hay conexión. Necesitamos internet para entrar.');
@@ -1002,6 +1252,8 @@ function enter(){
 }
 $('#logout').onclick=()=>{
   LS.del('saga_user'); user=null; isAdmin=false; adminKey=''; adminData=null; done=[false,false,false,false]; ended=[false,false,false,false];
+  st={fin:false,dec:'',rtok:'',sent:false,read:false,hasMsg:false}; for(let i=0;i<4;i++)COV[i]=[];
+  ['finale','last','result'].forEach(id=>$('#'+id).classList.remove('show')); closeScene(); sheetOpen(false);
   if(yt&&ytReady){try{yt.stopVideo()}catch(e){}} cur=-1; dock.classList.remove('show'); setDock();
   $('#hello').hidden=true; $('#admBtn').hidden=true; refreshLocks(); mark(); window.scrollTo(0,0); showGate(); $('#gName').value='';$('#gMail').value='';gPass.value='';passShow(false);
 };
@@ -1012,7 +1264,7 @@ function firstPending(i){for(let j=0;j<i;j++)if(!done[j])return j; return -1}
 function blocked(i){
   const n=firstPending(i); if(n<0)return;
   if(ended[n]){ openFeedback(n) }
-  else toast(`Primero escucha «${SONGS[n].title}» hasta el final y cuéntanos qué te pareció. <a href="#" data-playsong="${n}">Escucharla ahora</a>`,7000);
+  else toast(`Va en orden: primero escucha «${SONGS[n].title}» completa y responde sus 3 preguntas. <a href="#" data-playsong="${n}">Escucharla ahora</a>`,7000);
 }
 document.addEventListener('click',e=>{
   const a=e.target.closest('[data-playsong]'); if(a){e.preventDefault();$('#toast').classList.remove('on');const n=+a.dataset.playsong;goChapter(n);play(n)}
@@ -1024,63 +1276,256 @@ function refreshLocks(){
     box.textContent='';
     const add=(html)=>{box.insertAdjacentHTML('beforeend',html)};
     if(isAdmin){return}
-    if(done[i]) add('<span>✓ Tu opinión de esta canción quedó guardada.</span>');
+    if(done[i]) add('<span>✓ Respondida. Tus respuestas quedaron guardadas.</span>');
     else if(!canPlay(i)){ const n=firstPending(i);
-      add(`<b>Bloqueada.</b> Antes cuéntanos qué te dejó «${esc(SONGS[n].title)}».`);
-      add(ended[n]?`<br><button class="cta sec" data-openfb="${n}">Dejar mi opinión</button>`:`<br><button class="cta sec" data-playsong="${n}">Escuchar «${esc(SONGS[n].title)}»</button>`);
-    } else if(ended[i]) add(`<button class="cta sec" data-openfb="${i}">Dejar mi opinión de esta canción</button>`);
+      add(`<b>Bloqueada.</b> Se desbloquea cuando escuches «${esc(SONGS[n].title)}» completa y respondas sus 3 preguntas.`);
+      add(ended[n]?`<br><button class="cta sec" data-openfb="${n}">Responder las 3 preguntas</button>`:`<br><button class="cta sec" data-playsong="${n}">Escuchar «${esc(SONGS[n].title)}»</button>`);
+    } else if(ended[i]) add(`<button class="cta sec" data-openfb="${i}">Responder las 3 preguntas</button>`);
   });
+  $('#closeBtn').hidden=isAdmin||!user||!done.every(Boolean);
   mark();
 }
 
-/* ---- hoja de opinión + quiz ---- */
+/* ---- preguntas con letras A B C D (sirven para cada canción y para el cierre) ---- */
+const LET=['A','B','C','D'];
+function quizHTML(qs,ns){
+  return qs.map((it,k)=>{
+    let h=`<fieldset class="q"><legend>${k+1}. ${esc(it.q)}</legend>`;
+    it.o.forEach((o,j)=>{h+=`<label class="opt"><input type="radio" name="${ns}${k}" value="${j}"><i class="ltr" aria-hidden="true">${LET[j]}</i><span>${esc(o)}</span></label>`});
+    h+=`<label class="opt"><input type="radio" name="${ns}${k}" value="3"><i class="ltr" aria-hidden="true">D</i><span>Otra: lo digo con mis palabras</span></label>`;
+    h+=`<div class="qother" id="${ns}od${k}" hidden><input type="text" id="${ns}o${k}" maxlength="300" aria-label="Tu respuesta a la pregunta ${k+1}" placeholder="Escríbelo aquí. Si no sentiste nada, también vale decirlo."></div></fieldset>`;
+    return h;
+  }).join('');
+}
+function quizRead(root,qs,ns){
+  return qs.map((it,k)=>{
+    const r=root.querySelector(`input[name=${ns}${k}]:checked`), v=r?+r.value:-1, other=(root.querySelector('#'+ns+'o'+k).value||'').trim();
+    if(v>=0&&v<3)return{pick:it.o[v],other:'',ok:true};
+    if(v===3)return{pick:'',other,ok:other.length>=2};
+    return{pick:'',other:'',ok:false};
+  });
+}
+function quizSync(root,qs,ns){ qs.forEach((_,k)=>{const r=root.querySelector(`input[name=${ns}${k}]:checked`); root.querySelector('#'+ns+'od'+k).hidden=!(r&&+r.value===3)}) }
+function quizDraft(root,qs,ns){ return {v:qs.map((_,k)=>{const r=root.querySelector(`input[name=${ns}${k}]:checked`);return r?+r.value:null}),other:qs.map((_,k)=>root.querySelector('#'+ns+'o'+k).value)} }
+function quizRestore(root,qs,ns,d){ qs.forEach((_,k)=>{ if(d.v&&d.v[k]!=null){const r=root.querySelector(`input[name=${ns}${k}][value="${d.v[k]}"]`); if(r)r.checked=true} root.querySelector('#'+ns+'o'+k).value=(d.other&&d.other[k])||'' }); quizSync(root,qs,ns) }
+function needText(el,miss,extra){
+  if(extra){el.textContent=extra;el.classList.remove('ok');return}
+  if(miss===0){el.textContent='Todo listo.';el.classList.add('ok');return}
+  el.textContent=(miss>1?'Te faltan '+miss+' preguntas':'Te falta 1 pregunta')+' por responder.';el.classList.remove('ok');
+}
+
+/* ---- hoja de preguntas de cada canción ---- */
 const fb=$('#fb'), fbBody=$('#fbBody'); let fbSong=-1;
 function sheetOpen(on){fb.classList.toggle('show',on);inertOn(on);document.body.style.overflow=on?'hidden':''}
 function openFeedback(i){
   fbSong=i; const s=SONGS[i], q=QUIZ[i]; fb.style.setProperty('--accent',s.accent);
   $('#fbTag').textContent=(i===3?'Bonus track':'Canción '+(i+1)+' de 3'); $('#fbT').textContent='¿Qué te dejó «'+s.title+'»?';
-  const draft=LS.get('saga_draft_'+emailKey()+'_'+i)||{op:'',pick:[],other:['','','']};
-  let h='<form id="fbForm" novalidate>';
-  h+='<label class="field"><span>Tu opinión, crítica u observación <b>(obligatorio)</b></span><textarea id="fbOp" maxlength="2000" aria-describedby="fbHelp" placeholder="Lo que sentiste, lo que te vino a la mente…"></textarea></label>';
-  h+='<p class="qs" id="fbHelp">Si no sentiste nada, escribe «no sentí nada». Eso también sirve.</p>';
-  h+='<p class="qh">Mini quiz'+(REQUIRE_QUIZ?'':' <span class="qs">(opcional)</span>')+'</p>';
-  q.forEach((it,k)=>{
-    h+=`<fieldset class="q"><legend>${k+1}. ${esc(it.q)}</legend>`;
-    it.o.forEach((o,j)=>{h+=`<label class="opt"><input type="radio" name="q${k}" value="${j}"><span>${esc(o)}</span></label>`});
-    h+=`<div class="qother"><input type="text" id="qo${k}" maxlength="300" aria-label="Otra respuesta para la pregunta ${k+1} (opcional)" placeholder="Otra respuesta (opcional)"></div></fieldset>`;
-  });
-  h+='<p class="err" id="fbErr" role="alert"></p><button class="cta" id="fbSend" type="submit" style="width:100%;margin-top:4px" disabled>Guardar y seguir</button></form>';
-  fbBody.innerHTML=h; $('#fbOp').value=draft.op;
-  q.forEach((it,k)=>{ if(draft.pick[k]!=null){const r=fbBody.querySelector(`input[name=q${k}][value="${draft.pick[k]}"]`); if(r)r.checked=true} $('#qo'+k).value=draft.other[k]||'' });
-  const upd=()=>{ $('#fbSend').disabled=$('#fbOp').value.trim().length<3; LS.set('saga_draft_'+emailKey()+'_'+i,{op:$('#fbOp').value,pick:q.map((_,k)=>{const r=fbBody.querySelector(`input[name=q${k}]:checked`);return r?+r.value:null}),other:q.map((_,k)=>$('#qo'+k).value)}) };
-  fbBody.addEventListener('input',upd); upd();
+  const dk='saga_draft_'+emailKey()+'_'+i, draft=LS.get(dk)||{op:'',v:[],other:[]};
+  let h='<form id="fbForm" novalidate><p class="qs" style="margin-top:12px">Responde las 3 preguntas para desbloquear lo que sigue. Elige A, B o C; o D si quieres decirlo con tus palabras.</p>';
+  h+=quizHTML(q,'q');
+  h+='<label class="field"><span>Deja tu comentario <b>('+(REQUIRE_OPINION?'obligatorio':'opcional')+')</b></span><textarea id="fbOp" maxlength="2000" aria-describedby="fbHelp" placeholder="Lo que te provocó, de qué trataba para ti…"></textarea></label>';
+  h+='<p class="qs" id="fbHelp">Lo que sentiste, lo que te vino a la mente, lo que quieras expresar. Si no sentiste nada, dilo con tus palabras: «no sentí nada que opinar».</p>';
+  h+='<p class="err" id="fbErr" role="alert"></p><p class="need" id="fbNeed"></p><button class="cta" id="fbSend" type="submit" style="width:100%;margin-top:4px" disabled>Guardar y seguir</button></form>';
+  fbBody.innerHTML=h; $('#fbOp').value=draft.op||''; quizRestore(fbBody,q,'q',draft);
+  const upd=()=>{
+    quizSync(fbBody,q,'q'); const res=quizRead(fbBody,q,'q'), miss=res.filter(x=>!x.ok).length, op=$('#fbOp').value.trim();
+    const okQ=!REQUIRE_QUIZ||miss===0, okO=!REQUIRE_OPINION||op.length>=3;
+    $('#fbSend').disabled=!(okQ&&okO);
+    needText($('#fbNeed'),REQUIRE_QUIZ?miss:0,okO?'':'Escribe tu comentario para seguir.');
+    LS.set(dk,{op:$('#fbOp').value,...quizDraft(fbBody,q,'q')});
+  };
+  fbBody.oninput=upd; fbBody.onchange=upd; upd();
   $('#fbForm').addEventListener('submit',ev=>{ev.preventDefault();sendFeedback(i)});
   sheetOpen(true); setTimeout(()=>$('#fbT').focus(),60);
 }
+const FB_ERR={opinion:'Escribe tu comentario.',quiz:'Responde las 3 preguntas.',orden:'Primero responde las canciones anteriores.',
+  escucha:'La canción tiene que sonar casi completa para poder responder. Escúchala de nuevo.',sesion:'Tu sesión venció. Sal y vuelve a entrar con tu clave.'};
 async function sendFeedback(i){
   const q=QUIZ[i], op=$('#fbOp').value.trim(), err=$('#fbErr'); err.textContent='';
-  if(op.length<3){err.textContent='Escribe algo, aunque sea «no sentí nada».';$('#fbOp').focus();return}
-  const quiz=q.map((it,k)=>{const r=fbBody.querySelector(`input[name=q${k}]:checked`);return{pick:r?it.o[+r.value]:'',other:$('#qo'+k).value.trim()}});
-  if(REQUIRE_QUIZ&&quiz.some(x=>!x.pick&&!x.other)){err.textContent='Marca una alternativa en cada pregunta.';return}
-  const payload={action:'feedback',name:user.name,email:user.email,tok:user.tok||'',song:i,opinion:op,quiz};
-  const btn=$('#fbSend'); btn.disabled=true; btn.textContent='Guardando…'; let offline=false;
-  try{ const r=await api(payload); if(!r.ok){ btn.disabled=false;btn.textContent='Guardar y seguir';err.textContent=r.error==='opinion'?'Escribe algo, aunque sea «no sentí nada».':r.error==='sesion'?'Tu sesión venció. Sal y vuelve a entrar con tu clave.':'No se pudo guardar. Intenta de nuevo.';return} }
+  const res=quizRead(fbBody,q,'q');
+  if(REQUIRE_QUIZ&&res.some(x=>!x.ok)){err.textContent='Responde las 3 preguntas (A, B, C o D con tu texto).';return}
+  if(REQUIRE_OPINION&&op.length<3){err.textContent='Escribe tu comentario.';$('#fbOp').focus();return}
+  const payload={action:'feedback',name:user.name,email:user.email,tok:user.tok||'',song:i,opinion:op,heard:covPct(i),quiz:res.map(x=>({pick:x.pick,other:x.other}))};
+  const btn=$('#fbSend'); btn.disabled=true; btn.textContent='Guardando…'; let offline=false, r=null;
+  try{ r=await api(payload); if(!r.ok){ btn.disabled=false;btn.textContent='Guardar y seguir';err.textContent=FB_ERR[r.error]||'No se pudo guardar. Intenta de nuevo.';
+      if(r.error==='escucha'){ended[i]=false;saveState();refreshLocks()} return} }
   catch(e){ offline=true; queue(payload) }
-  done[i]=true; saveState(); LS.del('saga_draft_'+emailKey()+'_'+i); refreshLocks();
+  if(r&&r.ok)applyState(r); else done[i]=true;
+  saveState(); LS.del('saga_draft_'+emailKey()+'_'+i); refreshLocks();
   const last=i===SONGS.length-1;
-  fbBody.innerHTML=`<div style="text-align:center;padding:26px 0 6px"><p class="qh" style="margin-top:0">${last?'Gracias por escuchar la saga.':'Gracias. Queda guardado.'}</p>`+
-    (offline?'<p class="qs" style="margin-top:8px">Sin conexión: tu opinión quedó en el teléfono y se enviará sola.</p>':'')+
-    `<p class="lead" style="margin:10px auto 0;color:var(--ink2)">${last?'Armin va a leer lo que escribiste.':'Ya puedes escuchar «'+esc(SONGS[i+1].title)+'».'}</p>`+
-    (last?'<button class="cta" id="fbEnd" style="margin-top:18px">Compartir la saga</button>':'<button class="cta" id="fbNext" style="margin-top:18px"><svg class="i f"><use href="#i-play"/></svg>Escuchar la siguiente</button>')+
+  fbBody.innerHTML=`<div style="text-align:center;padding:26px 0 6px"><p class="qh" style="margin-top:0">${last?'Escuchaste la saga completa.':'Gracias. Queda guardado.'}</p>`+
+    (offline?'<p class="qs" style="margin-top:8px">Sin conexión: tus respuestas quedaron en el teléfono y se enviarán solas.</p>':'')+
+    `<p class="lead" style="margin:10px auto 0;color:var(--ink2)">${last?'Falta el cierre: cuatro preguntas y una última que merece calma.':'Se desbloqueó «'+esc(SONGS[i+1].title)+'».'}</p>`+
+    (last?'<button class="cta" id="fbFin" style="margin-top:18px">Ir al cierre de la saga</button>':'<button class="cta" id="fbNext" style="margin-top:18px"><svg class="i f"><use href="#i-play"/></svg>Escuchar la siguiente</button>')+
     '<br><button class="lnk" id="fbLater" style="margin-top:6px">Más tarde</button></div>';
-  $('#fbT').textContent=last?'Fin de la saga':'Siguiente canción'; $('#fbTag').textContent='';
+  $('#fbT').textContent=last?'Fin de las canciones':'Siguiente canción'; $('#fbTag').textContent='';
   const nx=$('#fbNext'); if(nx)nx.onclick=()=>{sheetOpen(false);goChapter(i+1);play(i+1)};
-  const en=$('#fbEnd'); if(en)en.onclick=()=>{sheetOpen(false);share('Tres canciones, una misma historia. ¿A quién le dirías «todavía estamos a tiempo»?');document.getElementById('fin').scrollIntoView({behavior:'smooth'})};
-  $('#fbLater').onclick=()=>{sheetOpen(false); if(last)document.getElementById('fin').scrollIntoView({behavior:'smooth'})};
+  const fi=$('#fbFin'); if(fi)fi.onclick=()=>{sheetOpen(false);openFinale()};
+  $('#fbLater').onclick=()=>{sheetOpen(false)};
 }
 $('#fbX').onclick=()=>sheetOpen(false);
 $('#fb .bd').onclick=()=>sheetOpen(false);
 addEventListener('keydown',e=>{if(e.key==='Escape'){if(fb.classList.contains('show'))sheetOpen(false); else if($('#adm').classList.contains('show'))closeAdmin()}});
+
+/* ---- a dónde seguir según el avance ---- */
+function route(){
+  if(isAdmin||!user||$('#recv').classList.contains('show'))return;
+  if(done.every(Boolean)){ if(!st.fin)openFinale(); else if(!st.dec)openLast('ask'); }
+}
+$('#closeBtn').onclick=()=>{ if(!st.fin)openFinale(); else if(!st.dec)openLast('ask'); else openResult(false) };
+
+/* ---- cierre de la saga: 4 preguntas obligatorias + nota + comentario libre ---- */
+let finStars=0;
+function starBtns(){ $('#finStars').innerHTML=[1,2,3,4,5].map(n=>`<button type="button" role="radio" aria-checked="${finStars===n}" aria-label="${n} ${n>1?'estrellas':'estrella'}" data-n="${n}" class="${n<=finStars?'on':''}"><svg class="i" viewBox="0 0 24 24"><use href="#i-star"/></svg></button>`).join('') }
+function finUpd(){
+  const qsEl=$('#finQs'); quizSync(qsEl,FINAL_QUIZ,'f');
+  const res=quizRead(qsEl,FINAL_QUIZ,'f'), miss=res.filter(x=>!x.ok).length, noStar=finStars<1;
+  $('#finSend').disabled=miss>0||noStar;
+  needText($('#finNeed'),miss,miss===0&&noStar?'Falta tu nota de 1 a 5 estrellas.':'');
+  LS.set('saga_fdraft_'+emailKey(),{text:$('#finText').value,stars:finStars,pub:$('#finPub').checked,...quizDraft(qsEl,FINAL_QUIZ,'f')});
+}
+function openFinale(){
+  closeScene(); const d=LS.get('saga_fdraft_'+emailKey())||{};
+  $('#finQs').innerHTML=quizHTML(FINAL_QUIZ,'f'); quizRestore($('#finQs'),FINAL_QUIZ,'f',d);
+  finStars=d.stars||0; starBtns(); $('#finText').value=d.text||''; $('#finPub').checked=!!d.pub; $('#finErr').textContent='';
+  ovlOpen('finale'); finUpd();
+}
+$('#finale').addEventListener('input',finUpd); $('#finale').addEventListener('change',finUpd);
+$('#finStars').addEventListener('click',e=>{const b=e.target.closest('button[data-n]'); if(!b)return; finStars=+b.dataset.n; starBtns(); finUpd()});
+$('#finForm').addEventListener('submit',async ev=>{
+  ev.preventDefault(); const err=$('#finErr'); err.textContent='';
+  const res=quizRead($('#finQs'),FINAL_QUIZ,'f');
+  if(res.some(x=>!x.ok)||finStars<1){err.textContent='Responde las 4 preguntas y pon tu nota.';return}
+  const btn=$('#finSend'); btn.disabled=true; btn.textContent='Guardando…';
+  try{
+    const r=await api({action:'final',name:user.name,email:user.email,tok:user.tok||'',quiz:res.map(x=>({pick:x.pick,other:x.other})),stars:finStars,text:$('#finText').value.trim(),publish:$('#finPub').checked});
+    if(r.ok||r.error==='sellado'){ if(r.ok)applyState(r); else st.fin=true; LS.del('saga_fdraft_'+emailKey()); ovlClose('finale'); route(); }
+    else err.textContent=({sesion:'Tu sesión venció. Sal y vuelve a entrar con tu clave.',orden:'Antes tienes que responder las 4 canciones.',quiz:'Responde las 4 preguntas.',estrellas:'Pon tu nota de 1 a 5 estrellas.'})[r.error]||'No se pudo guardar. Intenta de nuevo.';
+  }catch(e){ err.textContent='No hay conexión. Intenta de nuevo cuando vuelva.' }
+  btn.textContent='Guardar y ir a la última pregunta'; finUpd();
+});
+
+/* ---- la última pregunta: pantalla completa, sin botón de cierre, respuesta sellada ---- */
+function openLast(step,choice){
+  closeScene(); const b=$('#lastBox');
+  if(step==='confirm'){
+    const yes=choice==='si';
+    b.innerHTML=`<p class="kicker">Antes de sellar</p><h2 id="lastT" tabindex="-1">${yes?'Un SÍ sellado':'Un NO sellado'}</h2>
+      <p class="big">${yes?'Vas a decir <em>sí</em>: das el primer paso, sin vuelta atrás.':'Vas a decir <em>no</em>: prefieres soltar.'}</p>
+      <div class="seal"><b>Tu respuesta queda sellada.</b><br>No se puede cambiar ni borrar. Si tienes la más mínima duda, vuelve y piénsalo: esta pregunta merece calma.</div>
+      <p class="err" id="lastErr" role="alert"></p>
+      <button class="cta" id="lastGo">Confirmo, sellar mi respuesta</button>
+      <button class="cta no" id="lastBack">Volver</button>`;
+    $('#lastBack').onclick=()=>openLast('ask');
+    $('#lastGo').onclick=async()=>{
+      const go=$('#lastGo'), er=$('#lastErr'); go.disabled=true; go.textContent='Sellando…'; er.textContent='';
+      try{
+        const r=await api({action:'decide',name:user.name,email:user.email,tok:user.tok||'',dec:choice,confirm:true});
+        if(r.ok){ applyState(r); ovlClose('last'); openResult(true,r.ya&&r.dec!==choice); return }
+        er.textContent=r.error==='sesion'?'Tu sesión venció. Sal y vuelve a entrar con tu clave.':'No se pudo sellar. Intenta de nuevo.';
+      }catch(e){ er.textContent='No hay conexión. Intenta de nuevo cuando vuelva.' }
+      go.disabled=false; go.textContent='Confirmo, sellar mi respuesta';
+    };
+  } else {
+    b.innerHTML=`<p class="kicker">La última pregunta</p><h2 id="lastT" tabindex="-1">Una decisión de vida</h2>
+      <p class="big">¿Estás dispuesto o dispuesta a <em>construir esto entre dos</em>?</p>
+      <p class="big" style="font-size:clamp(21px,6vw,28px)">¿O prefieres soltar, porque ya solo te dejará dolor?</p>
+      <p class="lead" style="margin-top:18px">¿Sientes que darás el primer paso, y que cambiarán juntos con <b>respeto, confianza y voluntad</b>?</p>
+      <div class="seal"><b>El primer paso, pero sin vuelta atrás.</b><br>Aquí no hay grises: es sí o es no, y un sí es un sí sellado. Ante cualquier duda, mejor no lo hagas: nadie merece que lo amen con pena ni que lo hieran más de lo que ya duele. Ninguno de los dos lo merece.</div>
+      <button class="cta" id="lastYes">SÍ · Doy el primer paso, sin vuelta atrás</button>
+      <button class="cta no" id="lastNo">NO · Prefiero soltar</button>
+      <p class="care">Si en tu relación hay violencia o miedo, esta no es una decisión para tomar aquí: pide ayuda. En Chile, el Fono 1455 orienta en violencia contra las mujeres.</p>`;
+    $('#lastYes').onclick=()=>openLast('confirm','si'); $('#lastNo').onclick=()=>openLast('confirm','no');
+  }
+  ovlOpen('last');
+}
+
+/* ---- resultado y entrega a otra persona ---- */
+const sagaBase=()=>location.href.split('#')[0].split('?')[0];
+const waLink=link=>'https://wa.me/?text='+encodeURIComponent('Te dejé una respuesta en La saga de Armin Vandik: '+link);
+function openResult(fresh,changed){
+  closeScene(); const yes=st.dec==='si', link=sagaBase()+'?r='+st.rtok, b=$('#resBox');
+  let h=`<p class="kicker">Sellado</p><h2 id="resT" tabindex="-1">${yes?'Primer paso dado':'Gracias por ser sincero o sincera'}</h2>
+    <p class="lead">${yes?'Tu sí quedó sellado. Lo que viene es lo más importante: decírselo a esa persona y construirlo entre los dos, con respeto, confianza y voluntad.':'Tu respuesta quedó sellada. Soltar con respeto también es una forma de cuidar. Gracias por haber llegado hasta aquí.'}</p>`;
+  if(changed)h+=`<p class="qs" style="margin-top:10px">Tu respuesta ya estaba sellada como «${yes?'SÍ':'NO'}»: no se puede cambiar.</p>`;
+  h+=`<div class="chips"><span class="chip on">Respuesta sellada</span><span class="chip${st.hasMsg?' on':''}">${st.hasMsg?'Mensaje guardado':'Sin mensaje'}</span><span class="chip${st.sent?' on':''}">${st.sent?'Correo enviado':'Sin correo'}</span><span class="chip${st.read?' on':''}">${st.read?'Ya la leyeron':'Sin leer'}</span></div>`;
+  if(!st.read){
+    h+=`<div class="panelx"><h3>Entrégale tu respuesta a esa persona <span class="qs">(opcional)</span></h3>
+      <p class="qs" style="margin-top:6px">Nada se envía solo: tú decides si dejas un mensaje y a quién se lo das. El correo solo lleva un enlace; al abrirlo verá tu respuesta y tu mensaje, y a ti te llega un aviso cuando la lea.</p>
+      <label class="field"><span>Tu mensaje para esa persona</span><textarea id="dvMsg" maxlength="800" placeholder="Lo que quieras decirle…"></textarea></label>
+      <label class="field"><span>Su correo <b>(opcional)</b></span><input id="dvTo" type="email" inputmode="email" autocomplete="off" autocapitalize="off" maxlength="120" placeholder="nombre@correo.cl"${st.sent?' disabled':''}></label>
+      <p class="err" id="dvErr" role="alert"></p>
+      <button class="cta" id="dvSend" style="width:100%;margin-top:6px">${st.sent?'Guardar mi mensaje':'Guardar y enviar'}</button>
+      <div class="acts" style="margin:12px 0 0"><button class="cta sec" id="dvCopy">Copiar o compartir el enlace</button><a class="cta sec" id="dvWa" href="${waLink(link)}" target="_blank" rel="noopener">WhatsApp</a></div></div>`;
+  } else h+='<p class="qs" style="margin-top:16px">Ya la leyeron: el mensaje no se puede editar.</p>';
+  h+=`<div class="panelx"><h3>Cuéntanos cómo fue</h3><p class="qs" style="margin-top:6px">Si diste permiso en el cierre, tu reseña aparece en la página cuando Armin la revisa.</p><button class="cta sec" id="resRev" style="margin-top:10px">Ir a las reseñas</button></div>
+    <button class="cta sec" id="resClose" style="width:100%;margin-top:18px">Volver a la saga</button>`;
+  b.innerHTML=h;
+  const close=()=>ovlClose('result');
+  $('#resClose').onclick=close; $('#resRev').onclick=()=>{close();document.getElementById('resenas').scrollIntoView({behavior:'smooth'})};
+  if(!st.read){
+    const send=async()=>{
+      const er=$('#dvErr'), btn=$('#dvSend'); er.textContent=''; btn.disabled=true;
+      try{
+        const r=await api({action:'entregar',name:user.name,email:user.email,tok:user.tok||'',message:$('#dvMsg').value.trim(),to:$('#dvTo').value.trim()});
+        if(r.ok){ applyState(r); if(r.mailError)toast('No pudimos enviar el correo. Comparte el enlace tú: copiar o WhatsApp.',7000); else if($('#dvTo').value.trim())toast('Correo enviado. Te avisaremos cuando lo lean.',5000); else toast('Mensaje guardado. Ya puedes compartir el enlace.',4000); const m=$('#dvMsg').value; openResult(false); const n=$('#dvMsg'); if(n)n.value=m; return }
+        er.textContent=({correo:'Ese correo no parece válido.',enviado:'Ya enviaste un correo: solo se puede uno. Comparte el enlace.',leida:'Ya la leyeron: no se puede editar.',sesion:'Tu sesión venció. Sal y vuelve a entrar.'})[r.error]||'No se pudo guardar. Intenta de nuevo.';
+      }catch(e){ er.textContent='No hay conexión. Intenta de nuevo.' }
+      btn.disabled=false;
+    };
+    $('#dvSend').onclick=send;
+    $('#dvMsg').addEventListener('change',()=>{ api({action:'entregar',name:user.name,email:user.email,tok:user.tok||'',message:$('#dvMsg').value.trim()}).then(r=>{if(r.ok)applyState(r)}).catch(()=>{}) });
+    $('#dvCopy').onclick=async()=>{
+      const data={title:'La saga · Armin Vandik',text:'Te dejé una respuesta en La saga de Armin Vandik.',url:link};
+      try{ if(navigator.share){await navigator.share(data);return} await navigator.clipboard.writeText(link); toast('Enlace copiado. Pégalo donde quieras.') }
+      catch(e){ if(e&&e.name!=='AbortError')toast('No se pudo copiar desde aquí. Enlace: '+esc(link),9000) }
+    };
+  }
+  ovlOpen('result');
+}
+
+/* ---- el destinatario abre el enlace ?r=… (sin cuenta) ---- */
+async function showRecv(rt){
+  const b=$('#recvBox');
+  b.innerHTML='<p class="kicker">La saga · Armin Vandik</p><h2 id="recvT" tabindex="-1">Una respuesta para ti</h2><p class="lead">Abriendo…</p>'; ovlOpen('recv');
+  let r; try{ r=await api({action:'leer',rtok:rt,email:user?user.email:'',tok:user?user.tok:''}) }catch(e){ r={ok:false,error:'red'} }
+  const go='<button class="cta" id="recvGo" style="width:100%;margin-top:22px">Conocer la saga</button>';
+  if(!r||!r.ok){
+    b.innerHTML='<p class="kicker">La saga · Armin Vandik</p><h2 id="recvT" tabindex="-1">Una respuesta para ti</h2><p class="lead">'+(r&&r.error==='red'?'No pudimos conectar. Intenta de nuevo en un momento.':r&&r.error==='demo'?'Esta función necesita el servidor conectado.':'Este enlace no existe o ya no está disponible.')+'</p>'+go;
+  } else {
+    const yes=r.dec==='si';
+    b.innerHTML=`<p class="kicker">La saga · Armin Vandik</p><h2 id="recvT" tabindex="-1">Una respuesta para ti</h2>
+      <p class="lead"><b id="recvFrom"></b> terminó la saga y quiso entregarte su respuesta.</p>
+      <p class="big2">${yes?'Su respuesta es <em>SÍ</em>: quiere dar el primer paso y construir esto entre los dos, con respeto, confianza y voluntad.':'Su respuesta es <em>NO</em>: prefiere soltar.'}</p>
+      <div class="recvmsg" id="recvMsg" hidden></div>
+      <p class="care">No tienes que decidir nada hoy. Si lo que sientes es mucho, busca a alguien de confianza. Si hay violencia o miedo, pide ayuda: en Chile, el Fono 1455 orienta en violencia contra las mujeres.</p>`+go+
+      '<p class="qs" style="margin-top:12px">Cuando termines de conocer la saga, puedes contar tu experiencia en la sección de reseñas.</p>';
+    $('#recvFrom').textContent=r.from||'Alguien';
+    if(r.message){const m=$('#recvMsg'); m.hidden=false; m.textContent=r.message}
+  }
+  $('#recvGo').onclick=()=>{ ovlClose('recv'); try{history.replaceState(null,'',sagaBase())}catch(e){} if(!user||!user.tok)showGate(); else route() };
+  ovlOpen('recv');
+}
+
+/* ---- reseñas públicas ---- */
+function starsSV(n){ let h='<span class="sv" role="img" aria-label="'+n+' de 5 estrellas">'; for(let k=1;k<=5;k++)h+='<svg viewBox="0 0 24 24" class="'+(k<=Math.round(n)?'':'o')+'"><use href="#i-star"/></svg>'; return h+'</span>' }
+async function loadReviews(){
+  if(!API_URL)return;
+  try{
+    const r=await api({action:'resenas'}); if(!r.ok||!r.count)return;
+    const root=$('#revBody'); root.textContent='';
+    const el=(tag,cls,txt)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(txt!=null)n.textContent=txt;return n};
+    const avg=el('div','avg'); avg.innerHTML=starsSV(r.avg); const b=el('b',null,String(r.avg).replace('.',',')); avg.append(b,el('span','qs',r.count+(r.count>1?' reseñas':' reseña'))); root.append(avg);
+    const list=el('div','rcards');
+    r.items.forEach(it=>{
+      const c=el('div','rc'), h=el('div','rh'); h.append(el('strong',null,it.name)); const sv=el('span'); sv.innerHTML=starsSV(it.stars); h.append(sv); c.append(h);
+      if(it.text)c.append(el('p',null,'«'+it.text+'»'));
+      if(it.summary)c.append(el('small',null,it.summary));
+      list.append(c);
+    });
+    root.append(list);
+  }catch(e){}
+}
 
 /* ---- panel privado (solo con usuario, correo y clave correctos) ---- */
 const adm=$('#adm');
@@ -1095,8 +1540,10 @@ function renderAdmin(d){
   const root=$('#admBody'); root.textContent='';
   const el=(tag,cls,txt)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(txt!=null)n.textContent=txt;return n};
   const sum=el('div','asum');
-  [[d.people.length,'personas'],[d.answers.length,'respuestas'],[d.people.filter(p=>p.done.length>=4).length,'terminaron']].forEach(([n,l])=>{const c=el('div','ac');c.append(el('b',null,String(n)),el('span',null,l));sum.append(c)});
+  const FIN=d.finals||[], DEC=d.decisions||[];
+  [[d.people.length,'personas'],[d.answers.length,'respuestas'],[FIN.length,'cierres']].forEach(([n,l])=>{const c=el('div','ac');c.append(el('b',null,String(n)),el('span',null,l));sum.append(c)});
   root.append(sum);
+  if(DEC.length){const si=DEC.filter(x=>String(x.dec)==='si').length; root.append(el('p','qs','Decisiones selladas: '+si+' sí · '+(DEC.length-si)+' no · '+DEC.filter(x=>x.read).length+' leídas por el destinatario.'))}
   const row=el('div','acts'); row.style.margin='0 0 8px';
   if(/^https:\/\/docs\.google\.com\//.test(d.sheetUrl||'')){const a=el('a','cta','Abrir la hoja (BD)');a.href=d.sheetUrl;a.target='_blank';a.rel='noopener';a.style.margin='0';row.append(a)}
   const rf=el('button','cta sec','Actualizar'); rf.style.margin='0'; rf.onclick=()=>openAdmin(true); row.append(rf); root.append(row);
@@ -1112,6 +1559,14 @@ function renderAdmin(d){
       const ul=el('ul'); (QUIZ[a.n-1]||[]).forEach((it,k)=>{const x=a.quiz[k]||{}; const t=[x.pick,x.other?('Otra: '+x.other):''].filter(Boolean).join(' · ')||'—'; ul.append(el('li',null,it.q+' → '+t))});
       body.append(ul);
     });
+    const low=String(p.email).toLowerCase(), fin=FIN.find(x=>String(x.email).toLowerCase()===low), dec=DEC.find(x=>String(x.email).toLowerCase()===low);
+    if(fin){
+      body.append(el('h4',null,'Cierre de la saga · '+fin.stars+' de 5 ★'));
+      if(fin.text)body.append(el('p',null,fin.text));
+      const ul=el('ul'); FINAL_QUIZ.forEach((it,k)=>{const x=fin.quiz[k]||{}; const t=[x.pick,x.other?('Otra: '+x.other):''].filter(Boolean).join(' · ')||'—'; ul.append(el('li',null,it.q+' → '+t))});
+      body.append(ul); body.append(el('p','qs','Permiso para publicar la reseña: '+(fin.publish||'NO')));
+    }
+    if(dec) body.append(el('h4',null,'Decisión sellada: '+String(dec.dec).toUpperCase())), body.append(el('p','qs',(dec.hasMsg?'Dejó un mensaje (está en la pestaña Decision). ':'Sin mensaje. ')+(dec.to?'Correo al destinatario: '+dec.to+(dec.sent?' (enviado). ':'. '):'')+(dec.read?'El destinatario ya la leyó.':'Sin leer.')));
     det.append(body); root.append(det);
   });
 }
@@ -1120,11 +1575,14 @@ function renderAdmin(d){
 if(!API_URL)$('#demoBar').hidden=false;
 (async function boot(){
   inertOn(true);
+  loadReviews();
+  const rt=new URLSearchParams(location.search).get('r');
+  if(rt)showRecv(rt);                                       // alguien abrió un enlace de entrega
   if(!user||!user.tok){ LS.del('saga_user'); user=null; showGate(); return }   // sin token (sesión vieja): pedir clave
-  loadState(); hideGate(); enter();
+  loadState(); hideGate(); enter(); if(rt)ovlOpen('recv');
   try{
     const r=await api({action:'resume',email:user.email,tok:user.tok});
-    if(r.ok){(r.done||[]).forEach(i=>{done[i]=true});saveState();refreshLocks()}
+    if(r.ok){applyState(r);saveState();refreshLocks();route()}
     else if(r.error==='sesion'){ $('#logout').click() }
   }catch(e){}
 })();
