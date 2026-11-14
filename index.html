@@ -233,6 +233,7 @@ fieldset.q legend{font-weight:600;font-size:16px;margin-bottom:6px;padding:0}
 .gatebox b{color:var(--ink)}
 .gatebox .cta{margin-top:10px}
 .play[aria-disabled=true]{background:transparent;color:var(--ink2);border:1px dashed rgba(246,239,228,.35)}
+#testBar{position:fixed;left:0;right:0;top:0;z-index:130;background:#b45f06;color:#fff;font-size:12px;font-weight:700;letter-spacing:.04em;text-align:center;padding:3px 8px}
 #demoBar{position:fixed;left:0;right:0;top:0;z-index:120;background:#7a1f1f;color:#fff;font-size:13px;text-align:center;padding:4px 8px}
 #adm .wrap{max-width:640px}
 #adm h2{font-size:30px;font-style:italic;margin:6px 0 4px}
@@ -647,6 +648,7 @@ fieldset.q legend{font-weight:600;font-size:16px;margin-bottom:6px;padding:0}
 </main>
 
 <!-- ================= REPRODUCTOR ================= -->
+<div id="testBar" hidden>VERSIÓN DE PRUEBA · basta escuchar el 5 % de cada canción</div>
 <div id="demoBar" hidden>Modo de prueba: las respuestas no se están guardando en ningún servidor.</div>
 
 <div id="gate" class="show" role="dialog" aria-modal="true" aria-labelledby="gt">
@@ -1119,7 +1121,7 @@ $$('.reveal').forEach(el=>io2.observe(el));
 const API_URL='https://script.google.com/macros/s/AKfycbyTyiOr--uXtPinkhb0QdHpeRtMCJVbsD7_9Y8V9QKhMxW91VWC-dFJv8D0ts7d7Yu5/exec';      // vacío = modo de prueba (no guarda en ningún servidor)
 const REQUIRE_QUIZ=true;          // true = las 3 preguntas de cada canción son obligatorias (A, B, C o D con texto)
 const REQUIRE_OPINION=false;      // true = el comentario de cada canción también es obligatorio
-const LISTEN_MIN=0.7;             // fracción de la canción que tiene que sonar de verdad para poder responder
+const LISTEN_MIN=0.05;           // fracción de la canción que tiene que sonar de verdad para poder responder
 const FINAL_QUIZ=[
   {q:'¿Qué sentiste al terminar la saga?',o:['Ganas de reparar algo','Una nostalgia tranquila','Esperanza']},
   {q:'¿Con quién te identificaste?',o:['Con quien calló (la puerta)','Con quien propone el trato (los brotes)','Con quien sigue amando (la llave)']},
@@ -1573,6 +1575,7 @@ function renderAdmin(d){
 
 /* ---- arranque ---- */
 if(!API_URL)$('#demoBar').hidden=false;
+if(LISTEN_MIN<0.5)$('#testBar').hidden=false;
 (async function boot(){
   inertOn(true);
   loadReviews();
