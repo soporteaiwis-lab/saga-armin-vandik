@@ -166,7 +166,14 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;bac
 #seek::-webkit-slider-thumb{width:14px;height:14px;margin-top:-5px;border-width:3px}
 #seek::-moz-range-thumb{width:8px;height:8px;border-width:3px}
 #barrow time{font-size:12px;color:var(--ink2);font-variant-numeric:tabular-nums;min-width:38px}
-#expand{width:44px;height:32px;display:grid;place-items:center}
+#expand,#volbtn{width:44px;height:32px;display:grid;place-items:center}
+#volbtn[aria-expanded=true]{color:var(--accent)}
+#volpop{position:absolute;right:10px;bottom:100%;margin-bottom:6px;display:none;align-items:center;gap:6px;padding:4px 14px 4px 6px;
+  background:rgba(14,11,9,.97);border:1px solid var(--line);border-radius:16px;width:min(280px,calc(100vw - 20px));box-shadow:0 8px 28px rgba(0,0,0,.55)}
+#volpop.on{display:flex}
+#volpop button{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;flex:none}
+#volpop input{flex:1;min-width:0}
+#volpop output{font-size:13px;color:var(--ink2);min-width:36px;text-align:right;font-variant-numeric:tabular-nums}
 #expand svg{transition:transform .25s}
 #dock.big #expand svg{transform:rotate(180deg)}
 #toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(var(--dockh) + env(safe-area-inset-bottom) + 18px);z-index:50;
@@ -191,7 +198,12 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;bac
 #gate h2{font-size:clamp(38px,11vw,52px);font-style:italic;margin:10px 0 12px}
 #gate .lead{color:var(--ink2)}
 .field{display:block;margin-top:16px}
-.field>span{display:block;font-size:14px;color:var(--ink2);margin-bottom:6px}
+.field>span,.field>.fl{display:block;font-size:14px;color:var(--ink2);margin-bottom:6px}
+.pw{position:relative}
+.pw input{padding-right:88px}
+.pw .eye{position:absolute;right:2px;top:0;height:50px;min-width:80px;padding:0 14px;font-size:15px;font-weight:600;color:var(--gold);border-radius:14px}
+.pw .eye:focus-visible{outline:2px solid var(--gold);outline-offset:-2px}
+.field .help{font-size:13px;color:var(--ink2);margin-top:6px;line-height:1.45}
 .field input,.field textarea{width:100%;font:inherit;font-size:16px;color:var(--ink);background:#15110d;border:1px solid rgba(246,239,228,.28);border-radius:14px;padding:13px 14px;min-height:50px}
 .field textarea{min-height:130px;resize:vertical;line-height:1.5}
 .hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
@@ -249,6 +261,8 @@ fieldset.q legend{font-weight:600;font-size:16px;margin-bottom:6px;padding:0}
     <symbol id="i-prev" viewBox="0 0 24 24"><path d="M19 5v14L9 12z"/><rect x="5" y="5" width="3" height="14" rx="1"/></symbol>
     <symbol id="i-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
     <symbol id="i-up" viewBox="0 0 24 24"><path d="M6 15l6-6 6 6"/></symbol>
+    <symbol id="i-vol" viewBox="0 0 24 24"><path d="M11 5L6 9H3v6h3l5 4zM15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></symbol>
+    <symbol id="i-mute" viewBox="0 0 24 24"><path d="M11 5L6 9H3v6h3l5 4zM22 9l-6 6M16 9l6 6"/></symbol>
     <symbol id="i-share" viewBox="0 0 24 24"><path d="M12 15V3M7.5 7.5L12 3l4.5 4.5M5 12v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/></symbol>
     <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21.5zM4 5.5V21M8 7.5h8"/></symbol>
     <symbol id="i-out" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></symbol>
@@ -549,11 +563,18 @@ fieldset.q legend{font-weight:600;font-size:16px;margin-bottom:6px;padding:0}
       <label class="field"><span>Tu nombre</span><input id="gName" autocomplete="name" maxlength="60" required></label>
       <label class="field"><span>Tu correo</span><input id="gMail" type="email" inputmode="email" autocomplete="email" autocapitalize="off" maxlength="120" required></label>
       <input class="hp" id="gHp" tabindex="-1" autocomplete="off" aria-hidden="true">
-      <label class="field" id="gKeyRow" hidden><span>Clave privada</span><input id="gKey" type="password" autocomplete="off" maxlength="80"></label>
+      <div class="field">
+        <label class="fl" for="gPass">Tu clave</label>
+        <div class="pw">
+          <input id="gPass" type="password" autocomplete="current-password" autocapitalize="off" spellcheck="false" maxlength="60" aria-describedby="gPassHelp" required>
+          <button type="button" class="eye" id="gEye" aria-controls="gPass" aria-pressed="false" aria-label="Mostrar la clave">Ver</button>
+        </div>
+        <p class="help" id="gPassHelp">Inventa una clave de 6 o más caracteres, solo para esta app. No uses la de tu correo. Si ya entraste antes, escribe la misma.</p>
+      </div>
       <p class="err" id="gErr" role="alert"></p>
       <button class="cta" id="gBtn" type="submit" style="width:100%;margin-top:4px">Entrar</button>
     </form>
-    <p class="fine">Guardamos tu nombre, tu correo y lo que respondas solo para que Armin pueda leerlo. No se publica ni se comparte. No es un registro: no hay contraseña.</p>
+    <p class="fine">Guardamos tu nombre, tu correo, tu clave (cifrada: nadie puede leerla) y lo que respondas, solo para que Armin pueda leerlo. No se publica ni se comparte.</p>
   </div>
 </div>
 
@@ -588,7 +609,13 @@ fieldset.q legend{font-weight:600;font-size:16px;margin-bottom:6px;padding:0}
     <time id="tcur">0:00</time>
     <input type="range" id="seek" min="0" max="1000" value="0" aria-label="Posición de la canción">
     <time id="tdur">0:00</time>
+    <button id="volbtn" aria-label="Volumen" aria-expanded="false" aria-controls="volpop"><svg class="i" id="voli"><use href="#i-vol"/></svg></button>
     <button id="expand" aria-label="Ampliar el video" aria-expanded="false"><svg class="i"><use href="#i-up"/></svg></button>
+  </div>
+  <div id="volpop" role="group" aria-label="Control de volumen">
+    <button id="volmute" aria-label="Silenciar" aria-pressed="false"><svg class="i" id="volmi"><use href="#i-vol"/></svg></button>
+    <input type="range" id="volr" min="0" max="100" step="1" value="80" aria-label="Volumen">
+    <output id="volv" for="volr">80%</output>
   </div>
 </div>
 <div id="toast" role="status"></div>
@@ -687,7 +714,7 @@ window.onYouTubeIframeAPIReady=()=>{
   const v={playsinline:1,rel:0,modestbranding:1,iv_load_policy:3,hl:'es',controls:0,disablekb:1,fs:0};
   if(/^https?:/.test(location.protocol))v.origin=location.origin;
   yt=new YT.Player('yt',{width:'100%',height:'100%',videoId:SONGS[0].yt,playerVars:v,events:{
-    onReady:()=>{ytReady=true; if(pending!==null){const i=pending;pending=null;play(i,pendingT)}},
+    onReady:()=>{ytReady=true; applyVol(); if(pending!==null){const i=pending;pending=null;play(i,pendingT)}},
     onStateChange:onState,
     onError:()=>{toast('YouTube no dejó reproducir aquí. <a href="https://www.youtube.com/watch?v='+SONGS[Math.max(cur,0)].yt+'" target="_blank" rel="noopener">Abrir en YouTube</a>',9000)}
   }});
@@ -723,7 +750,7 @@ function onState(e){
   const S=YT.PlayerState; playing=e.data===S.PLAYING;
   $('#ppi').innerHTML='<use href="#'+(playing?'i-pause':'i-play')+'"/>';
   $('#pp').setAttribute('aria-label',playing?'Pausar':'Reproducir');
-  if(playing){clearInterval(tick);tick=setInterval(prog,500);$('#tdur').textContent=fmt(yt.getDuration());startLoop()}
+  if(playing){applyVol();clearInterval(tick);tick=setInterval(prog,500);$('#tdur').textContent=fmt(yt.getDuration());startLoop()}
   else {clearInterval(tick);lyricUpdate()}
   if(e.data===S.ENDED){
     ended[cur]=true; saveState();
@@ -877,6 +904,29 @@ const QUIZ=[
 ];
 const LS={get(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
 let user=LS.get('saga_user'), done=[false,false,false,false], ended=[false,false,false,false], isAdmin=false, adminKey='', adminData=null;
+/* ---- volumen (iPhone/iPad no deja cambiar el volumen por código: allí solo silenciar; el volumen va con los botones del teléfono) ---- */
+const IOS=/iP(hone|ad|od)/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+let vol=(()=>{const v=LS.get('saga_vol');return typeof v==='number'&&v>=0&&v<=100?v:80})(), muted=!!LS.get('saga_muted');
+const volPop=$('#volpop'), volBtn=$('#volbtn'), volR=$('#volr');
+function applyVol(){
+  const off=muted||vol===0;
+  if(yt&&ytReady){ try{ yt.setVolume(vol); off?yt.mute():yt.unMute() }catch(e){} }
+  const ic=off?'#i-mute':'#i-vol';
+  $('#voli use').setAttribute('href',ic); $('#volmi use').setAttribute('href',ic);
+  volR.value=vol; $('#volv').textContent=(off&&muted?'—':vol+'%');
+  volR.style.opacity=off?.55:1;
+  $('#volmute').setAttribute('aria-pressed',off); $('#volmute').setAttribute('aria-label',off?'Quitar el silencio':'Silenciar');
+  volBtn.setAttribute('aria-label',off?'Volumen: en silencio':'Volumen '+vol+'%');
+  if(IOS)volBtn.setAttribute('aria-label',off?'Quitar el silencio':'Silenciar');
+}
+function volOpen(on){ volPop.classList.toggle('on',on); volBtn.setAttribute('aria-expanded',on) }
+volBtn.onclick=()=>{ if(IOS){muted=!muted;LS.set('saga_muted',muted);applyVol();return} volOpen(!volPop.classList.contains('on')); if(volPop.classList.contains('on'))volR.focus() };
+$('#volmute').onclick=()=>{ muted=!muted; if(!muted&&vol===0)vol=60; LS.set('saga_muted',muted);LS.set('saga_vol',vol);applyVol() };
+volR.addEventListener('input',()=>{ vol=+volR.value; if(vol>0)muted=false; LS.set('saga_vol',vol);LS.set('saga_muted',muted);applyVol() });
+document.addEventListener('click',e=>{ if(volPop.classList.contains('on')&&!e.target.closest('#volpop,#volbtn'))volOpen(false) });
+addEventListener('keydown',e=>{ if(e.key==='Escape'&&volPop.classList.contains('on')){volOpen(false);volBtn.focus()} });
+applyVol();
+
 const MAIN=['header.top','main','#dock'];
 function inertOn(on){MAIN.forEach(s=>{const e=$(s); if(e)e.inert=on})}
 function emailKey(){return user?user.email.toLowerCase():''}
@@ -886,7 +936,8 @@ function loadState(){ const d=LS.get('saga_done_'+emailKey()), e=LS.get('saga_en
 /* ---- comunicación con el Apps Script ---- */
 async function api(body){
   if(!API_URL){ // modo de prueba
-    if(body.action==='login') return {ok:true,admin:false,done:done.map((d,i)=>d?i:-1).filter(i=>i>=0)};
+    if(body.action==='login') return {ok:true,admin:false,tok:'demo',done:done.map((d,i)=>d?i:-1).filter(i=>i>=0)};
+    if(body.action==='resume') return {ok:true,done:done.map((d,i)=>d?i:-1).filter(i=>i>=0)};
     if(body.action==='feedback') return {ok:true};
     return {ok:false,error:'demo'};
   }
@@ -906,8 +957,11 @@ async function flushOutbox(){
 addEventListener('online',flushOutbox);
 
 /* ---- pantalla de acceso ---- */
-const gate=$('#gate'), gErr=$('#gErr'), gBtn=$('#gBtn'), gKeyRow=$('#gKeyRow');
-let step='login';
+const gate=$('#gate'), gErr=$('#gErr'), gBtn=$('#gBtn'), gPass=$('#gPass'), gEye=$('#gEye');
+function passShow(on){ gPass.type=on?'text':'password'; gEye.textContent=on?'Ocultar':'Ver'; gEye.setAttribute('aria-pressed',on); gEye.setAttribute('aria-label',on?'Ocultar la clave':'Mostrar la clave') }
+gEye.onclick=()=>{ passShow(gPass.type==='password'); gPass.focus() };
+const GATE_MSG={correo:'Ese correo no parece válido.',nombre:'Escribe tu nombre.',clavecorta:'Tu clave debe tener al menos 6 caracteres.',
+  clave:'Esa clave no coincide con ese correo. Si la olvidaste, avísale a Armin.',bloqueado:'Demasiados intentos. Espera 15 minutos.'};
 function showGate(){gate.classList.add('show');inertOn(true);document.body.style.overflow='hidden'}
 function hideGate(){gate.classList.remove('show');inertOn(false);document.body.style.overflow=''}
 function gateError(t){gErr.textContent=t}
@@ -915,41 +969,41 @@ function busy(on,label){gBtn.disabled=on;gBtn.textContent=on?'Un momento…':lab
 const validEmail=e=>/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e);
 $('#gForm').addEventListener('submit',async ev=>{
   ev.preventDefault(); gateError('');
-  const name=$('#gName').value.trim().replace(/\s+/g,' '), email=$('#gMail').value.trim().toLowerCase();
+  const name=$('#gName').value.trim().replace(/\s+/g,' '), email=$('#gMail').value.trim().toLowerCase(), pass=gPass.value;
   if(name.length<2){gateError('Escribe tu nombre.');$('#gName').focus();return}
   if(!validEmail(email)){gateError('Revisa tu correo: parece que le falta algo.');$('#gMail').focus();return}
-  if(step==='key'){ return adminLogin(name,email,$('#gKey').value) }
+  if(pass.length<6){gateError('Tu clave debe tener al menos 6 caracteres.');gPass.focus();return}
   busy(true,'Entrar');
   try{
-    const r=await api({action:'login',name,email,device:navigator.userAgent.slice(0,120),web:$('#gHp').value});
-    if(!r.ok){gateError(r.error==='correo'?'Ese correo no parece válido.':'No pudimos entrar. Intenta de nuevo.');busy(false,'Entrar');return}
-    if(r.admin){ step='key'; gKeyRow.hidden=false; busy(false,'Ver panel'); $('#gKey').focus(); gateError(''); return }
-    user={name,email}; LS.set('saga_user',user); loadState(); (r.done||[]).forEach(i=>{done[i]=true}); saveState(); enter();
+    const r=await api({action:'login',name,email,pass,device:navigator.userAgent.slice(0,120),web:$('#gHp').value});
+    if(!r.ok){gateError(GATE_MSG[r.error]||'No pudimos entrar. Intenta de nuevo.');busy(false,'Entrar');return}
+    if(r.admin){ return adminLogin(name,email,pass) }   // tu usuario: la misma clave es la privada del panel
+    user={name,email,tok:r.tok||''}; LS.set('saga_user',user); loadState(); (r.done||[]).forEach(i=>{done[i]=true}); saveState(); enter();
+    if(r.nuevo)toast('Listo: tu clave quedó guardada. Úsala para volver a entrar.',6000);
   }catch(e){
-    // sin conexión: entra igual y avisa al servidor cuando vuelva
-    user={name,email}; LS.set('saga_user',user); loadState(); queue({action:'login',name,email,device:navigator.userAgent.slice(0,120)}); enter();
+    gateError('No hay conexión. Necesitamos internet para entrar.');
   }
   busy(false,'Entrar');
 });
 async function adminLogin(name,email,key){
   if(!key){gateError('Escribe tu clave privada.');return}
-  busy(true,'Ver panel');
+  busy(true,'Entrar');
   try{
     const r=await api({action:'admin',name,email,key});
     if(r.ok){ isAdmin=true; adminKey=key; adminData=r; user={name,email}; done=[true,true,true,true]; enter(); openAdmin(); }
     else gateError(r.error==='bloqueado'?'Demasiados intentos. Espera 15 minutos.':r.error==='demo'?'El panel necesita el servidor conectado.':'Clave incorrecta.');
   }catch(e){gateError('No pude conectar con el servidor.')}
-  busy(false,'Ver panel');
+  busy(false,'Entrar');
 }
 function enter(){
-  hideGate(); $('#gKey').value=''; gKeyRow.hidden=true; step='login';
+  hideGate(); gPass.value=''; passShow(false);
   $('#hello').hidden=false; $('#helloName').textContent=isAdmin?'Sesión de administrador':'Hola, '+user.name.split(' ')[0];
   $('#admBtn').hidden=!isAdmin; refreshLocks(); mark(); flushOutbox();
 }
 $('#logout').onclick=()=>{
   LS.del('saga_user'); user=null; isAdmin=false; adminKey=''; adminData=null; done=[false,false,false,false]; ended=[false,false,false,false];
   if(yt&&ytReady){try{yt.stopVideo()}catch(e){}} cur=-1; dock.classList.remove('show'); setDock();
-  $('#hello').hidden=true; $('#admBtn').hidden=true; refreshLocks(); mark(); window.scrollTo(0,0); showGate(); $('#gName').value='';$('#gMail').value='';
+  $('#hello').hidden=true; $('#admBtn').hidden=true; refreshLocks(); mark(); window.scrollTo(0,0); showGate(); $('#gName').value='';$('#gMail').value='';gPass.value='';passShow(false);
 };
 
 /* ---- bloqueo entre canciones ---- */
@@ -1008,9 +1062,9 @@ async function sendFeedback(i){
   if(op.length<3){err.textContent='Escribe algo, aunque sea «no sentí nada».';$('#fbOp').focus();return}
   const quiz=q.map((it,k)=>{const r=fbBody.querySelector(`input[name=q${k}]:checked`);return{pick:r?it.o[+r.value]:'',other:$('#qo'+k).value.trim()}});
   if(REQUIRE_QUIZ&&quiz.some(x=>!x.pick&&!x.other)){err.textContent='Marca una alternativa en cada pregunta.';return}
-  const payload={action:'feedback',name:user.name,email:user.email,song:i,opinion:op,quiz};
+  const payload={action:'feedback',name:user.name,email:user.email,tok:user.tok||'',song:i,opinion:op,quiz};
   const btn=$('#fbSend'); btn.disabled=true; btn.textContent='Guardando…'; let offline=false;
-  try{ const r=await api(payload); if(!r.ok){ btn.disabled=false;btn.textContent='Guardar y seguir';err.textContent=r.error==='opinion'?'Escribe algo, aunque sea «no sentí nada».':'No se pudo guardar. Intenta de nuevo.';return} }
+  try{ const r=await api(payload); if(!r.ok){ btn.disabled=false;btn.textContent='Guardar y seguir';err.textContent=r.error==='opinion'?'Escribe algo, aunque sea «no sentí nada».':r.error==='sesion'?'Tu sesión venció. Sal y vuelve a entrar con tu clave.':'No se pudo guardar. Intenta de nuevo.';return} }
   catch(e){ offline=true; queue(payload) }
   done[i]=true; saveState(); LS.del('saga_draft_'+emailKey()+'_'+i); refreshLocks();
   const last=i===SONGS.length-1;
@@ -1048,7 +1102,7 @@ function renderAdmin(d){
   const rf=el('button','cta sec','Actualizar'); rf.style.margin='0'; rf.onclick=()=>openAdmin(true); row.append(rf); root.append(row);
   if(!d.people.length){root.append(el('p','qs','Todavía no entra nadie.'));return}
   d.people.forEach(p=>{
-    const det=el('details','person'), sm=el('summary'), l=el('div'), st=el('strong',null,p.name), sg=el('small',null,p.email);
+    const det=el('details','person'), sm=el('summary'), l=el('div'), st=el('strong',null,p.name), sg=el('small',null,p.email+(p.rol==='equipo'?' · equipo':''));
     l.append(st,sg); sm.append(l,el('em',null,p.done.length+'/4 · '+String(p.last||'').slice(0,16)));
     det.append(sm); const body=el('div','pb');
     const mine=d.answers.filter(a=>String(a.email).toLowerCase()===String(p.email).toLowerCase()).sort((a,b)=>a.n-b.n);
@@ -1066,12 +1120,12 @@ function renderAdmin(d){
 if(!API_URL)$('#demoBar').hidden=false;
 (async function boot(){
   inertOn(true);
-  if(!user){showGate();return}
+  if(!user||!user.tok){ LS.del('saga_user'); user=null; showGate(); return }   // sin token (sesión vieja): pedir clave
   loadState(); hideGate(); enter();
   try{
-    const r=await api({action:'login',name:user.name,email:user.email,device:navigator.userAgent.slice(0,120)});
-    if(r.ok&&r.admin){ user=null; showGate(); $('#gName').value=''; $('#gMail').value=''; return }   // el admin vuelve a identificarse con su clave
+    const r=await api({action:'resume',email:user.email,tok:user.tok});
     if(r.ok){(r.done||[]).forEach(i=>{done[i]=true});saveState();refreshLocks()}
+    else if(r.error==='sesion'){ $('#logout').click() }
   }catch(e){}
 })();
 </script>
